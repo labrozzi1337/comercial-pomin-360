@@ -1,0 +1,28 @@
+# Todo push na main publica em https://comercial.pomin360.com.br (aws_dados, /srv/www/pomin360comercial).
+# A chave do secret DEPLOY_SSH_KEY está presa no servidor a um único script (command= no
+# authorized_keys): git reset para origin/main, docker compose up --build e health check.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-pomin360comercial
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Deploy no aws_dados
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+        run: |
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "35.174.181.218 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIq6ffVPYY0gVUAXuLPtl8wfwj9ZOMmCrouqoxTHbvTH" > ~/.ssh/known_hosts
+          ssh -o ServerAliveInterval=30 ubuntu@35.174.181.218 deploy

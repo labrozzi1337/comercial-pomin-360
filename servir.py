@@ -3,6 +3,7 @@
 
 Local:  python3 servir.py              -> http://localhost:5360
 Docker: docker compose up -d --build   -> http://localhost:5360
+Produção: todo push na main publica em https://comercial.pomin360.com.br (.github/workflows/deploy.yml).
 Ambiente: APP_USER, APP_PASSWORD, HOST, PORT, SESSION_SECRET, ANTHROPIC_API_KEY (IA da página).
 Sem SESSION_SECRET fixo, reiniciar desloga todo mundo e invalida os links de convite já enviados.
 
