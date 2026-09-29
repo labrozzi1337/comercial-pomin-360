@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Pomin360 · Acesso comercial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;800&display=swap">
+<style>
+:root{color-scheme:dark;--bg:#080b12;--line:#ffffff15;--muted:#919aab;--mint:#7ce6d2;--gold:#e2b65c;--blend:linear-gradient(110deg,#79e2be,#e2b65c);--blend-hi:linear-gradient(110deg,#a6f0d8,#f1d79a)}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:#edf1f5;font:16px 'DM Sans',sans-serif;display:grid;place-items:center;padding:24px 16px;overflow:hidden}
+.ambient{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 30% 30%,#15324566,transparent 55%),radial-gradient(ellipse at 75% 75%,#3d2f1433,transparent 50%)}
+.orbit{position:fixed;left:50%;top:50%;border:1px solid #75bfd318;border-radius:50%;translate:-50% -50%;pointer-events:none}
+.o1{width:560px;height:560px}.o2{width:820px;height:700px;border-style:dashed;border-color:#e2b65c14}.o3{width:1120px;height:880px}
+.scan{position:fixed;left:50%;top:50%;width:760px;height:760px;margin:-380px 0 0 -380px;border-radius:50%;background:conic-gradient(from 0deg,transparent 65%,#7ce6d20c,#e2b65c0a 80%,transparent 90%);animation:spin 30s linear infinite;pointer-events:none}
+main{position:relative;width:min(420px,100%);animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+.brand{display:block;text-align:center;margin-bottom:28px;font:800 44px/1 Manrope;letter-spacing:-4px}
+.brand span{background:var(--blend);-webkit-background-clip:text;background-clip:text;color:transparent}
+.brand small{display:block;font:600 9px Manrope;letter-spacing:6px;margin-top:9px;color:#c9d2de}
+form{padding:34px 32px 30px;border:1px solid #ffffff22;border-radius:24px;background:linear-gradient(140deg,#162131ee,#0c111dee);box-shadow:0 30px 120px #000a,0 0 60px #e2b65c12;backdrop-filter:blur(12px)}
+.eyebrow{font-size:11px;letter-spacing:2.6px;font-weight:600;color:var(--mint)}
+h1{font:600 28px/1.15 Manrope;letter-spacing:-1px;margin:12px 0 6px}
+p.sub{margin:0 0 24px;color:var(--muted);font-size:14px;line-height:1.6}
+label{display:block;font-size:13px;font-weight:500;color:#c9d2de;margin:16px 0 8px}
+.field{position:relative}
+input{width:100%;background:#080e19;border:1px solid #ffffff25;border-radius:10px;padding:13px 14px;color:#fff;font:inherit;transition:border-color .2s,box-shadow .2s}
+input:focus{outline:none;border-color:#7ce6d288;box-shadow:0 0 0 3px #7ce6d21f}
+.field input{padding-right:84px}
+.show{position:absolute;right:6px;top:50%;translate:0 -50%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:var(--muted);font:500 12px 'DM Sans';cursor:pointer}
+.show:hover{color:#edf1f5;background:#ffffff0d}
+button[type=submit]{width:100%;margin-top:24px;padding:14px;border:0;border-radius:10px;background:var(--blend);color:#102329;font:600 15px 'DM Sans';cursor:pointer;transition:filter .2s,transform .2s}
+button[type=submit]:hover{background:var(--blend-hi)}
+button[type=submit]:active{transform:translateY(1px)}
+button:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
+.erro{margin:18px 0 0;padding:11px 14px;border:1px solid #e5484d55;border-radius:10px;background:#e5484d14;color:#ffb4b6;font-size:13px;animation:shake .35s}
+footer{margin-top:22px;text-align:center;font-size:10px;letter-spacing:1px;color:#697687}
+@keyframes spin{to{rotate:360deg}}
+@keyframes rise{from{opacity:0;translate:0 18px}}
+@keyframes shake{25%{translate:-6px 0}75%{translate:6px 0}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="ambient"></div><div class="orbit o1"></div><div class="orbit o2"></div><div class="orbit o3"></div><div class="scan"></div>
+<main>
+  <span class="brand" aria-label="Pomin360">P<span>360</span><small>POMIN360</small></span>
+  <form method="post" action="">
+    <span class="eyebrow">EXPERIÊNCIA COMERCIAL</span>
+    <h1>Acesso comercial</h1>
+    <p class="sub">Entre para apresentar o universo Pomin360.</p>
+    <label for="usuario">Usuário</label>
+    <input id="usuario" name="usuario" autocomplete="username" autocapitalize="none" spellcheck="false" required autofocus>
+    <label for="senha">Senha</label>
+    <div class="field"><input id="senha" name="senha" type="password" autocomplete="current-password" required><button type="button" class="show" aria-pressed="false" aria-controls="senha">Mostrar</button></div>
+    <input type="hidden" name="h" id="h">
+    <!--ERRO-->
+    <button type="submit">Entrar →</button>
+  </form>
+  <footer>GRUPO POMIN · Tecnologia que conecta todas as pontas.</footer>
+</main>
+<script>
+// Leva o #trecho do link (ex.: #questionario) até depois do login; botão mostra/oculta a senha
+document.getElementById('h').value=location.hash;
+document.querySelector('.show').onclick=e=>{const s=document.getElementById('senha'),on=s.type==='password';s.type=on?'text':'password';e.currentTarget.textContent=on?'Ocultar':'Mostrar';e.currentTarget.setAttribute('aria-pressed',on)};
+</script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+backup
+.DS_Store
+Dockerfile
+docker-compose.yml
+.dockerignore
+.env
+# READMEs originais: a imagem só precisa da base limpa em ia/base.md
+readmes

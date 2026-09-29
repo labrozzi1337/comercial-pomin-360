@@ -1,0 +1,6 @@
+# Chaves (SESSION_SECRET, ANTHROPIC_API_KEY): ficam só na máquina/servidor
+.env
+# Cópia manual da página; o histórico do git já cumpre esse papel
+backup/
+.DS_Store
+__pycache__/

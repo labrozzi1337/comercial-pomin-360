@@ -1,0 +1,13 @@
+services:
+  pomin360:
+    build: .
+    ports:
+      - "5360:5360"
+    environment:
+      APP_USER: comercial
+      APP_PASSWORD: comercial
+      # Vem do .env (fora da imagem): fixo, para reiniciar o container não derrubar logins nem convites
+      SESSION_SECRET: ${SESSION_SECRET:?defina SESSION_SECRET no .env}
+      # IA da página; sem ela a seção de perguntas avisa que não está configurada
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    restart: unless-stopped
