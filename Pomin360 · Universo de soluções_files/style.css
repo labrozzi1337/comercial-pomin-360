@@ -39,3 +39,8 @@
 .ask-chips{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}.ask-chips button{font-size:12px;padding:8px 12px;border-radius:30px;border-color:#e2b65c44;color:var(--gold-soft)}.ask-form{display:flex;gap:10px}.ask-form input{flex:1;min-width:0}.ask-form button{flex-shrink:0}.ask-form.busy button{opacity:.5;pointer-events:none}.ask .note{text-align:center;margin:12px 0 0}
 .dots-typing{display:inline-flex;gap:5px;padding:4px 0}.dots-typing i{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:blink 1.2s infinite}.dots-typing i:nth-child(2){animation-delay:.2s}.dots-typing i:nth-child(3){animation-delay:.4s}@keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
 @media(max-width:760px){.msg{max-width:95%}.ask-box{padding:16px}}
+
+/* Menu com 5 links: não quebra linha, aperta em telas médias e some abaixo de 1060px (como já some no celular) */
+nav a,.basket-button,.logout{white-space:nowrap}@media(max-width:1280px){nav{gap:22px;font-size:13px}}@media(max-width:1060px){nav{display:none}}
+/* Topo: Minha seleção + Sair (o servidor põe o Sair só para o comercial logado) */
+.head-actions{display:flex;align-items:center;gap:10px}.logout{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border:1px solid var(--line);border-radius:9px;font-size:14px;color:var(--muted);transition:color .2s,border-color .2s,background .2s}.logout svg{width:16px;height:16px}.logout:hover{color:var(--gold-soft);border-color:#e2b65c55;background:#ffffff08}@media(max-width:760px){.logout{padding:12px}.logout{font-size:0;gap:0}}

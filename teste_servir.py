@@ -42,6 +42,7 @@ seller = h['Set-Cookie'].split(';')[0]
 s, _, b = req('GET', page, cookie=seller)
 assert s == 200 and 'Universo de soluções</title>' in b, 'com login a página abre'
 invite = re.search(r'POMIN360_CONVITE="([^"]+)"', b)[1]
+assert 'href="/sair"' in b and '<!--SAIR-->' not in b, 'comercial vê o botão Sair'
 assert re.search(r'style\.css\?v=\d+"', b) and re.search(r'app\.js\?v=\d+"', b), 'CSS/JS com versão do deploy'
 assert req('GET', css + '?v=1', cookie=seller)[0] == 200, 'CSS com ?v= abre'
 assert req('GET', css, cookie=seller)[0] == 200, 'CSS com caminho NFD abre'
@@ -60,7 +61,8 @@ assert s == 200 and LOGIN_PAGE not in b and 'POMIN360_CONVITE' not in b, 'convit
 client = h['Set-Cookie'].split(';')[0]
 assert client.startswith('pomin360=c.'), 'sessão de cliente'
 assert req('GET', css, cookie=client)[0] == 200, 'cliente carrega o CSS'
-assert 'POMIN360_CONVITE' not in req('GET', page, cookie=client)[2], 'cliente não recebe convite'
+b_cli = req('GET', page, cookie=client)[2]
+assert 'POMIN360_CONVITE' not in b_cli and 'href="/sair"' not in b_cli, 'cliente não recebe convite nem Sair'
 for bad in (invite[:-4] + '0000', f'{old}.{servir.sign("convite", old)}', seller.split('=s.')[1]):
     assert LOGIN_PAGE in req('GET', f'{page}?c={bad}')[2], 'convite falso, vencido ou token de sessão não entra'
 
@@ -81,4 +83,7 @@ assert pergunta(ok, client) == 429, 'clientes dividem um teto: cookie novo do co
 for evil in ('//evil.com', '///evil.com/x'):
     assert not req('POST', evil, 'usuario=comercial&senha=comercial')[1]['Location'].startswith('//'), 'sem redirecionar para outro site'
 assert 'Max-Age=0' in req('GET', '/sair', cookie=seller)[1]['Set-Cookie'], 'sair apaga o cookie'
+s, h, b = req('GET', '/favicon.svg')
+assert s == 200 and h['Content-type'] == 'image/svg+xml' and '<svg' in b, 'ícone abre sem login'
+assert 'rel="icon" href="/favicon.svg"' in req('GET', '/')[2], 'tela de login usa o ícone'
 print('ok: login e convite do servir.py')

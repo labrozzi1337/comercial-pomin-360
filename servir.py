@@ -51,6 +51,9 @@ Não fale de detalhes técnicos internos (servidores, bancos, variáveis, creden
 
 Responda direto e curto (até umas 120 palavras, a menos que peçam detalhes), em texto simples. Pode usar listas curtas com "- " e **negrito** nos nomes dos sistemas."""
 cliente_ia = None
+# Botão do topo, só para o comercial logado (o cliente do convite não tem senha para voltar)
+SAIR = ('<a class="logout" href="/sair"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
+        'stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>Sair</a>')
 
 
 def sign(kind, exp):
@@ -94,6 +97,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         path = unicodedata.normalize('NFC', unquote(url.path))
         if path == '/sair':
             return self.redirect('/', f'{COOKIE}=; Max-Age=0; Path=/; HttpOnly; SameSite=Lax')
+        if path == '/favicon.svg':  # público: a aba da tela de login também mostra o ícone
+            return super().do_GET()
         kind = self.session()
         if not kind and path == '/' + PAGE and valid('convite', parse_qs(url.query).get('c', [''])[0]):
             return self.page('c', self.cookie('c'))
@@ -187,6 +192,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         html = open(self.translate_path('/' + quote(PAGE)), encoding='utf-8').read()
         html = re.sub(r'(_files/[^"?]+\.(?:css|js))"', rf'\1?v={VERSAO}"', html)
         if kind == 's':
+            html = html.replace('<!--SAIR-->', SAIR, 1)
             html = html.replace('</head>', f'<script>window.POMIN360_CONVITE="{token("convite", INVITE_TTL)}"</script></head>', 1)
         self.send_html(200, html, cookie)
 
