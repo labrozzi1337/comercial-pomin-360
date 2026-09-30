@@ -13,6 +13,8 @@
   Transforme dados em painéis para apoiar suas decisões. Conecte bancos relacionais ou APIs REST. O sistema lê a estrutura dos dados e sugere gráficos para montar seus dashboards. Para quem: TI, controladoria e áreas orientadas a dados.
 - PominGoverna (Gestão & inteligência) · pomingoverna.auditto.com.br
   Riscos, políticas, auditorias e planos de ação no mesmo lugar. Organize governança e compliance com histórico: políticas, riscos, auditorias, acessos, fornecedores e planos de ação. Para quem: Compliance, auditoria, segurança da informação e jurídico.
+- Reports CFO (Gestão & inteligência) · pominreportscfo.auditto.com.br
+  Performance financeira com IA, do desvio ao plano de ação. Conecte os números da empresa às pessoas responsáveis por eles. Cada desvio relevante vira explicação, responsável, plano de ação e impacto financeiro acompanhado pelo CFO. Para quem: CFOs, controladoria e gestores das áreas financeiras.
 - PominSprint (Operação & execução) · sprint.grupopomin.com.br
   Organize projetos, sprints e entregas com clareza. Acompanhe o trabalho do time com quadros, sprints e visão das entregas em uma experiência consistente com o ecossistema Pomin. Para quem: TI, projetos e operação.
 - PominDev (Operação & execução) · pomindev.auditto.com.br
