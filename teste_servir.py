@@ -2,6 +2,7 @@
 import http.client
 import http.server
 import json
+import os
 import re
 import threading
 import time
@@ -62,9 +63,31 @@ client = h['Set-Cookie'].split(';')[0]
 assert client.startswith('pomin360=c.'), 'sessão de cliente'
 assert req('GET', css, cookie=client)[0] == 200, 'cliente carrega o CSS'
 b_cli = req('GET', page, cookie=client)[2]
+assert req('GET', '/calculadora.html', cookie=seller)[0] == 200, 'comercial abre a calculadora'
+assert 'id="calc-frame"' in req('GET', page, cookie=seller)[2] and 'calc-frame' not in b_cli, 'calculadora embutida só para o comercial'
+assert req('GET', '/calculadora.html', cookie=client)[0] == 404, 'cliente não vê preços nem margem'
+assert req('GET', '/calculadora.html')[0] == 401, 'sem login, nada de calculadora'
 assert 'POMIN360_CONVITE' not in b_cli and 'href="/sair"' not in b_cli, 'cliente não recebe convite nem Sair'
 for bad in (invite[:-4] + '0000', f'{old}.{servir.sign("convite", old)}', seller.split('=s.')[1]):
     assert LOGIN_PAGE in req('GET', f'{page}?c={bad}')[2], 'convite falso, vencido ou token de sessão não entra'
+
+# Contratar (assinatura no Mercado Pago)
+assert servir.doc_valido('52998224725') and servir.doc_valido('11222333000181'), 'CPF e CNPJ válidos'
+for ruim in ('52998224724', '11222333000182', '11111111111', '123'):
+    assert not servir.doc_valido(ruim), f'{ruim} é inválido'
+def contrata(dados, cookie=None):
+    c = http.client.HTTPConnection('127.0.0.1', srv.server_port)
+    c.request('POST', '/api/contratar', json.dumps(dados), {'Content-Type': 'application/json', **({'Cookie': cookie} if cookie else {})})
+    return c.getresponse().status
+pedido = {'nome': 'Fulano de Tal', 'email': 'f@empresa.com.br', 'fone': '(11) 99999-9999', 'doc': '529.982.247-25', 'valor': 4815, 'sistemas': ['PominAI']}
+assert contrata(pedido) == 401 and contrata(pedido, client) == 401, 'só o comercial gera link'
+assert contrata({**pedido, 'doc': '52998224724'}, seller) == 400, 'CPF errado recusado'
+assert contrata({**pedido, 'valor': 0}, seller) == 400, 'mensalidade zerada recusada'
+assert contrata({**pedido, 'fone': '9999'}, seller) == 400, 'telefone sem DDD recusado'
+token_mp = os.environ.pop('MP_ACCESS_TOKEN', None)
+assert contrata(pedido, seller) == 503, 'sem token, avisa que não está configurado'
+if token_mp:
+    os.environ['MP_ACCESS_TOKEN'] = token_mp
 
 # IA da página
 def pergunta(historico, cookie=None):

@@ -10,4 +10,6 @@ services:
       SESSION_SECRET: ${SESSION_SECRET:?defina SESSION_SECRET no .env}
       # IA da página; sem ela a seção de perguntas avisa que não está configurada
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      # Botão Contratar (assinatura mensal no Mercado Pago)
+      MP_ACCESS_TOKEN: ${MP_ACCESS_TOKEN:-}
     restart: unless-stopped

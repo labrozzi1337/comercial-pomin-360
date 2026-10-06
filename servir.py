@@ -23,6 +23,8 @@ import re
 import secrets
 import time
 import unicodedata
+import urllib.error
+import urllib.request
 from urllib.parse import parse_qs, quote, unquote, urlsplit
 
 USER = os.environ.get('APP_USER', 'comercial')
@@ -51,9 +53,27 @@ Não fale de detalhes técnicos internos (servidores, bancos, variáveis, creden
 
 Responda direto e curto (até umas 120 palavras, a menos que peçam detalhes), em texto simples. Pode usar listas curtas com "- " e **negrito** nos nomes dos sistemas."""
 cliente_ia = None
+# Calculadora de preços embutida abaixo de "Montar minha solução": tem custo e margem, então só o comercial recebe
+CALCULADORA = '<section class="calc" id="calculadora" aria-label="Calculadora comercial"><iframe id="calc-frame" src="/calculadora.html" title="Calculadora comercial"></iframe></section>'
 # Botão do topo, só para o comercial logado (o cliente do convite não tem senha para voltar)
 SAIR = ('<a class="logout" href="/sair"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" '
         'stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>Sair</a>')
+
+
+def doc_valido(d):
+    # CPF (11) ou CNPJ (14) com dígitos verificadores; sequências repetidas (111...) não valem
+    if len(set(d)) < 2:
+        return False
+    if len(d) == 11:
+        return all((sum(int(d[i]) * (n + 1 - i) for i in range(n)) * 10 % 11 % 10) == int(d[n]) for n in (9, 10))
+    if len(d) == 14:
+        pesos = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+        for n in (12, 13):
+            resto = sum(int(d[i]) * p for i, p in enumerate(pesos[13 - n:])) % 11
+            if (0 if resto < 2 else 11 - resto) != int(d[n]):
+                return False
+        return True
+    return False
 
 
 def sign(kind, exp):
@@ -108,6 +128,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return self.redirect('/' + quote(PAGE))
         if path == '/' + PAGE:
             return self.page(kind)
+        if path == '/calculadora.html':  # preços, custo interno e margem: só o comercial
+            return super().do_GET() if kind == 's' else self.send_error(404)
         if not path.startswith(ALLOWED):
             return self.send_error(404)
         super().do_GET()
@@ -118,6 +140,8 @@ class Handler(http.server.SimpleHTTPRequestHandler):
     def do_POST(self):
         if urlsplit(self.path).path == '/api/perguntar':
             return self.perguntar()
+        if urlsplit(self.path).path == '/api/contratar':
+            return self.contratar()
         size = int(self.headers.get('Content-Length') or 0)
         form = parse_qs(self.rfile.read(min(size, 4096)).decode('utf-8', 'replace'))
         field = lambda k: form.get(k, [''])[0]
@@ -179,6 +203,53 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             texto = ''.join(b.text for b in r.content if b.type == 'text').strip() or 'Não encontrei uma resposta. Tente perguntar de outro jeito.'
         self.send_json(200, {'resposta': texto})
 
+    def contratar(self):
+        # Botão Contratar da calculadora: cria a assinatura mensal no Mercado Pago e devolve o link de pagamento
+        if self.session() != 's':
+            return self.send_json(401, {'erro': 'Só o comercial logado pode gerar o link de pagamento.'})
+        try:
+            d = json.loads(self.rfile.read(min(int(self.headers.get('Content-Length') or 0), 20000)))
+            nome, email, doc = str(d['nome']).strip(), str(d['email']).strip(), re.sub(r'\D', '', str(d['doc']))
+            fone = re.sub(r'^55(?=\d{10,11}$)', '', re.sub(r'\D', '', str(d['fone'])))
+            valor, sistemas = round(float(d['valor']), 2), [str(x)[:60] for x in d.get('sistemas', [])][:30]
+        except (ValueError, KeyError, TypeError):
+            return self.send_json(400, {'erro': 'Dados inválidos.'})
+        if not 3 <= len(nome) <= 150:
+            return self.send_json(400, {'erro': 'Informe o nome do responsável.'})
+        if not re.fullmatch(r'[^\s@]+@[^\s@]+\.[^\s@]+', email) or len(email) > 200:
+            return self.send_json(400, {'erro': 'Informe um e-mail válido.'})
+        if not 10 <= len(fone) <= 11:
+            return self.send_json(400, {'erro': 'Informe o WhatsApp ou telefone com DDD.'})
+        if not doc_valido(doc):
+            return self.send_json(400, {'erro': 'CPF ou CNPJ inválido. Confira os números.'})
+        if not 1 <= valor <= 1_000_000:
+            return self.send_json(400, {'erro': 'A mensalidade precisa estar entre R$ 1 e R$ 1.000.000.'})
+        token = os.environ.get('MP_ACCESS_TOKEN')
+        if not token:
+            return self.send_json(503, {'erro': 'O pagamento ainda não foi configurado neste servidor.'})
+        corpo = {
+            'reason': ('Pomin360 · ' + (', '.join(sistemas) or 'assinatura'))[:250],
+            'external_reference': f'{doc} · {nome} · {fone}'[:250],  # o Mercado Pago não tem campo de telefone na assinatura
+            'payer_email': email,
+            'auto_recurring': {'frequency': 1, 'frequency_type': 'months', 'transaction_amount': valor, 'currency_id': 'BRL'},
+            'back_url': os.environ.get('APP_BASE_URL', 'https://comercial.pomin360.com.br/'),
+            'status': 'pending',  # o cliente autoriza a assinatura no link do Mercado Pago
+        }
+        req = urllib.request.Request('https://api.mercadopago.com/preapproval', json.dumps(corpo).encode(), method='POST',
+                                     headers={'Authorization': f'Bearer {token}', 'Content-Type': 'application/json'})
+        try:
+            with urllib.request.urlopen(req, timeout=30) as r:
+                link = json.loads(r.read()).get('init_point')
+        except urllib.error.HTTPError as e:
+            msg = json.loads(e.read() or b'{}').get('message', '') if e.headers.get_content_type() == 'application/json' else ''
+            print(f'Mercado Pago recusou a assinatura ({e.code}): {msg}', flush=True)
+            return self.send_json(502, {'erro': f'O Mercado Pago recusou: {msg or e.code}.'})
+        except (urllib.error.URLError, TimeoutError):
+            return self.send_json(503, {'erro': 'Sem conexão com o Mercado Pago. Tente de novo.'})
+        if not link:
+            return self.send_json(502, {'erro': 'O Mercado Pago não devolveu o link de pagamento.'})
+        self.send_json(200, {'link': link})
+
     def send_json(self, status, obj):
         body = json.dumps(obj, ensure_ascii=False).encode()
         self.send_response(status)
@@ -193,6 +264,7 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         html = re.sub(r'(_files/[^"?]+\.(?:css|js))"', rf'\1?v={VERSAO}"', html)
         if kind == 's':
             html = html.replace('<!--SAIR-->', SAIR, 1)
+            html = html.replace('<!--CALCULADORA-->', CALCULADORA.replace('/calculadora.html', f'/calculadora.html?v={VERSAO}'), 1)
             html = html.replace('</head>', f'<script>window.POMIN360_CONVITE="{token("convite", INVITE_TTL)}"</script></head>', 1)
         self.send_html(200, html, cookie)
 

@@ -4,3 +4,5 @@
 backup/
 .DS_Store
 __pycache__/
+# Prints e logs dos testes no navegador
+.playwright-mcp/
