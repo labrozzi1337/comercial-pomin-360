@@ -6,3 +6,7 @@ docker-compose.yml
 .env
 # READMEs originais: a imagem só precisa da base limpa em ia/base.md
 readmes
+node_modules
+apps/*/node_modules
+apps/frontend/dist
+.env.local

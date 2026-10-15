@@ -5,109 +5,80 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Pomin360 · Acesso comercial</title>
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/images/icone-p360.webp" type="image/webp">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;800&display=swap">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..800&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
-:root{color-scheme:dark;--bg:#080b12;--line:#ffffff15;--muted:#919aab;--mint:#7ce6d2;--gold:#e2b65c;--blend:linear-gradient(110deg,#79e2be,#e2b65c);--blend-hi:linear-gradient(110deg,#a6f0d8,#f1d79a)}
+/* Tela de login na identidade da v3: a parede, o porta-chaves com os molhos e a chave P360 */
+:root{--noite:#071827;--void:#030B14;--gelo:#EAF3FF;--gelo2:#A9BBCD;--azul:#00D9F5;--verde:#00E3A4;--coral:#FF6B4A;--linha:rgba(234,243,255,.16)}
 *{box-sizing:border-box}
-html,body{height:100%}
-body{margin:0;background:var(--bg);color:#edf1f5;font:16px 'DM Sans',sans-serif;display:grid;place-items:center;padding:24px 16px;overflow:hidden}
-#stars{position:fixed;inset:0;width:100%;height:100%;z-index:-2;pointer-events:none}
-.ambient{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse at 30% 30%,#15324566,transparent 55%),radial-gradient(ellipse at 75% 75%,#3d2f1433,transparent 50%)}
-/* Anéis girando, cada um com um ponto de luz; a órbita elíptica dos sistemas é medida no JS */
-.ring{position:fixed;left:50%;top:50%;border-radius:50%;border:1px solid #75bfd31f;translate:-50% -50%;pointer-events:none;animation:spin var(--d) linear infinite}
-.ring:after{content:'';position:absolute;top:-3px;left:50%;width:6px;height:6px;margin-left:-3px;border-radius:50%;background:var(--c);box-shadow:0 0 14px var(--c)}
-.r1{width:560px;height:560px;--d:50s;--c:#7ce6d2}.r2{width:880px;height:880px;border:1px dashed #e2b65c26;--d:90s;--c:#e2b65c;animation-direction:reverse}.r3{width:1200px;height:1200px;--d:150s;--c:#7ce6d288}
-.track{position:fixed;left:50%;top:50%;width:var(--w,1200px);height:var(--h,760px);translate:-50% -50%;border-radius:50%;border:1px dashed #e2b65c1c;pointer-events:none}
-.scan{position:fixed;left:50%;top:50%;width:900px;height:900px;margin:-450px 0 0 -450px;border-radius:50%;background:conic-gradient(from 0deg,transparent 65%,#7ce6d20e,#e2b65c0c 80%,transparent 90%);animation:spin 30s linear infinite;pointer-events:none}
-.apps{position:fixed;inset:0;pointer-events:none}.apps[hidden]{display:none}
-.app{position:absolute;left:0;top:0;display:flex;flex-direction:column;align-items:center;gap:8px;will-change:transform}
-.tile{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;border:1px solid transparent;background:radial-gradient(circle at 50% -10%,#3d311b,#100e0b 72%) padding-box,linear-gradient(145deg,#f8e6b0,#b8872f 38%,#3a2a12 62%,#e6c070) border-box;box-shadow:inset 0 1px 0 #ffe9b040,0 10px 28px #000b,0 0 22px #d4a84b26;animation:float 5s ease-in-out infinite;animation-delay:var(--i)}
-.tile svg{width:46%;height:46%;filter:drop-shadow(0 0 6px #e8c06f55)}
-.app b{font-size:12px;font-weight:500;color:#dfe6ee;white-space:nowrap;text-shadow:0 2px 10px #000}
-.glow{position:fixed;left:-280px;top:-280px;width:560px;height:560px;border-radius:50%;pointer-events:none;z-index:30;background:radial-gradient(circle,#7ce6d219,#e2b65c0e 40%,transparent 66%);mix-blend-mode:screen;opacity:0;transition:opacity .8s;will-change:translate}.glow.on{opacity:1}
-main{position:relative;z-index:3;width:min(420px,100%);animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
-.brand{display:block;text-align:center;margin-bottom:28px;font:800 44px/1 Manrope;letter-spacing:-4px}
-.brand span{background:var(--blend);-webkit-background-clip:text;background-clip:text;color:transparent}
-.brand small{display:block;font:600 9px Manrope;letter-spacing:6px;margin-top:9px;color:#c9d2de}
-form{padding:34px 32px 30px;border:1px solid #ffffff22;border-radius:24px;background:linear-gradient(140deg,#162131ee,#0c111dee);box-shadow:0 30px 120px #000a,0 0 60px #e2b65c12;backdrop-filter:blur(12px)}
-.eyebrow{font-size:11px;letter-spacing:2.6px;font-weight:600;color:var(--mint)}
-h1{font:600 28px/1.15 Manrope;letter-spacing:-1px;margin:12px 0 6px}
-p.sub{margin:0 0 24px;color:var(--muted);font-size:14px;line-height:1.6}
-label{display:block;font-size:13px;font-weight:500;color:#c9d2de;margin:16px 0 8px}
-.field{position:relative}
-input{width:100%;background:#080e19;border:1px solid #ffffff25;border-radius:10px;padding:13px 14px;color:#fff;font:inherit;transition:border-color .2s,box-shadow .2s}
-input:focus{outline:none;border-color:#7ce6d288;box-shadow:0 0 0 3px #7ce6d21f}
-.field input{padding-right:84px}
-.show{position:absolute;right:6px;top:50%;translate:0 -50%;padding:7px 10px;border:0;border-radius:7px;background:transparent;color:var(--muted);font:500 12px 'DM Sans';cursor:pointer}
-.show:hover{color:#edf1f5;background:#ffffff0d}
-button[type=submit]{width:100%;margin-top:24px;padding:14px;border:0;border-radius:10px;background:var(--blend);color:#102329;font:600 15px 'DM Sans';cursor:pointer;transition:filter .2s,transform .2s}
-button[type=submit]:hover{background:var(--blend-hi)}
-button[type=submit]:active{transform:translateY(1px)}
-button:focus-visible{outline:2px solid var(--mint);outline-offset:3px}
-.erro{margin:18px 0 0;padding:11px 14px;border:1px solid #e5484d55;border-radius:10px;background:#e5484d14;color:#ffb4b6;font-size:13px;animation:shake .35s}
-footer{margin-top:22px;text-align:center;font-size:10px;letter-spacing:1px;color:#697687}
-@keyframes spin{to{rotate:360deg}}
-@keyframes float{50%{translate:0 -6px}}
-@keyframes rise{from{opacity:0;translate:0 18px}}
-@keyframes shake{25%{translate:-6px 0}75%{translate:6px 0}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+html,body{margin:0;min-height:100%}
+body{min-height:100vh;min-height:100svh;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(360px,.9fr);background:#06121E url(/images/v3-parede.webp) 30% 0/cover no-repeat;color:var(--gelo);font:400 16px/1.5 Montserrat,system-ui,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.cena{position:relative;min-height:100svh;overflow:hidden}
+/* mesma geometria da apresentação: --peg é a posição do pino; --ax/--ay, o ponto do aro que encosta nele */
+.rack{position:absolute;left:4%;top:16vh;--wp:min(52vw,820px);width:var(--wp)}
+.rack img.tabua{width:100%;display:block;filter:drop-shadow(0 18px 24px rgba(0,0,0,.45))}
+.molho{--w:calc(var(--wp)*.371);position:absolute;width:var(--w);left:calc(var(--peg)*var(--wp) - var(--ax)*var(--w));top:calc(var(--wp)*.3268 - var(--wp)*.012 - var(--ay)*var(--w));transform-origin:calc(var(--ax)*100%) calc(var(--ay)*66.667%);animation:balanca 3.4s ease-in-out infinite alternate}
+.molho.peq{--w:calc(var(--wp)*.371*.52);animation-duration:2.9s}
+.pino{position:absolute;z-index:2;width:calc(var(--wp)*.0651);left:calc(var(--peg)*var(--wp) - var(--wp)*.03255);top:calc(var(--wp)*.3268 - var(--wp)*.03255)}
+.molho img{width:100%;display:block;filter:drop-shadow(0 30px 30px rgba(0,0,0,.5))}
+
+@keyframes balanca{from{rotate:-2deg}to{rotate:2deg}}
+.chave{position:absolute;right:3%;bottom:5vh;width:min(34%,290px);rotate:-10deg;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+.lado{position:relative;display:flex;flex-direction:column;justify-content:center;padding:6vh clamp(20px,5vw,64px);background:linear-gradient(90deg,rgba(3,11,20,0),rgba(3,11,20,.82) 18%,rgba(3,11,20,.94))}
+.marca img{height:30px;width:auto;display:block;margin-bottom:6vh}
+.rotulo{display:flex;align-items:center;gap:.8rem;margin:0 0 1rem;font:600 .72rem 'JetBrains Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--gelo2)}
+.rotulo i{width:34px;height:1px;background:var(--gelo2)}
+h1{margin:0 0 .6rem;font-size:clamp(2.2rem,4vw,3.6rem);font-weight:800;line-height:1;letter-spacing:-.045em}
+h1 em{font-family:'Instrument Serif',Georgia,serif;font-style:italic;font-weight:400;color:var(--azul);letter-spacing:-.01em}
+.sub{margin:0 0 2.2rem;color:var(--gelo2);max-width:26rem}
+form{max-width:400px}
+label{display:block;margin:0 0 .4rem;font:600 .68rem 'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--gelo2)}
+input{width:100%;padding:.85rem 1rem;margin-bottom:1.1rem;background:rgba(7,24,39,.8);border:1px solid var(--linha);border-radius:4px;color:var(--gelo);font:500 1rem Montserrat,sans-serif}
+input:focus{outline:none;border-color:var(--verde)}
+.campo{position:relative}.campo input{padding-right:5.5rem}
+.mostrar{position:absolute;right:.5rem;top:.45rem;padding:.4rem .7rem;background:none;border:1px solid var(--linha);border-radius:3px;color:var(--gelo2);font:600 .72rem Montserrat,sans-serif;cursor:pointer}
+button[type=submit]{width:100%;min-height:50px;margin-top:.4rem;border:0;border-radius:4px;background:var(--verde);color:#03201A;font:700 1rem Montserrat,sans-serif;cursor:pointer;transition:background .2s}
+button[type=submit]:hover{background:#3AF0BD}
+.erro{margin:0 0 1rem;padding:.7rem .9rem;border-left:3px solid var(--coral);background:rgba(255,107,74,.1);color:#FFB4A3;font-size:.9rem}
+footer{margin-top:5vh;font:600 .64rem 'JetBrains Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--gelo2)}
+:focus-visible{outline:2px solid var(--azul);outline-offset:3px}
+@media (max-width:860px){body{grid-template-columns:minmax(0,1fr)}.cena{min-height:52svh}.rack{top:4vh;left:-6%;--wp:112vw}.chave{display:none}.lado{background:linear-gradient(180deg,rgba(3,11,20,0),rgba(3,11,20,.94) 12%);padding-top:2rem}.marca img{margin-bottom:2rem}}
+@media (prefers-reduced-motion:reduce){.molho{animation:none}}
 </style>
 </head>
 <body>
-<canvas id="stars" aria-hidden="true"></canvas>
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><linearGradient id="gold" x1="3" y1="2" x2="21" y2="22" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff1c1"/><stop offset=".45" stop-color="#e2b65c"/><stop offset="1" stop-color="#9c6b24"/></linearGradient></defs></svg>
-<div class="ambient"></div><div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div><div class="track"></div><div class="scan"></div>
-<div class="apps" aria-hidden="true"></div>
-<main>
-  <span class="brand" aria-label="Pomin360">P<span>360</span><small>POMIN360</small></span>
+<div class="cena" aria-hidden="true">
+  <div class="rack">
+    <img class="tabua" src="/images/v3-porta-chaves.webp" alt="">
+    <div class="molho peq" style="--peg:.3223;--ax:.501;--ay:.1396"><img src="/images/v3-molho-a.webp" alt=""></div>
+    <div class="molho" style="--peg:.4993;--ax:.501;--ay:.0576"><img src="/images/v3-molho-logos.webp" alt=""></div>
+    <div class="molho peq" style="--peg:.6764;--ax:.5;--ay:.1104;animation-duration:3.8s"><img src="/images/v3-molho-c.webp" alt=""></div>
+    <img class="pino" style="--peg:.3223" src="/images/v3-pino.webp" alt=""><img class="pino" style="--peg:.4993" src="/images/v3-pino.webp" alt=""><img class="pino" style="--peg:.6764" src="/images/v3-pino.webp" alt="">
+  </div>
+  <img class="chave" src="/images/v3-chave-p360-recorte.webp" alt="">
+</div>
+<main class="lado">
+  <a class="marca" href="/" aria-label="Pomin360"><img src="/images/logo-p360.webp" alt="P360"></a>
+  <p class="rotulo"><i></i>Acesso comercial</p>
+  <h1>Devolva o molho.<br><em>Fique com a chave.</em></h1>
+  <p class="sub">Entre para apresentar o Pomin360: tudo em um, com uma chave só.</p>
   <form method="post" action="">
-    <span class="eyebrow">EXPERIÊNCIA COMERCIAL</span>
-    <h1>Acesso comercial</h1>
-    <p class="sub">Entre para apresentar o universo Pomin360.</p>
     <label for="usuario">Usuário</label>
     <input id="usuario" name="usuario" autocomplete="username" autocapitalize="none" spellcheck="false" required autofocus>
     <label for="senha">Senha</label>
-    <div class="field"><input id="senha" name="senha" type="password" autocomplete="current-password" required><button type="button" class="show" aria-pressed="false" aria-controls="senha">Mostrar</button></div>
+    <div class="campo"><input id="senha" name="senha" type="password" autocomplete="current-password" required><button type="button" class="mostrar" aria-pressed="false" aria-controls="senha">Mostrar</button></div>
     <input type="hidden" name="h" id="h">
     <!--ERRO-->
-    <button type="submit">Entrar →</button>
+    <button type="submit">Entrar</button>
   </form>
-  <footer>GRUPO POMIN · Tecnologia que conecta todas as pontas.</footer>
+  <footer>Grupo Pomin · Pomin360</footer>
 </main>
 <script>
-// Leva o #trecho do link (ex.: #questionario) até depois do login; botão mostra/oculta a senha
+// Leva o #trecho do link até depois do login; botão mostra/oculta a senha
 document.getElementById('h').value=location.hash;
-document.querySelector('.show').onclick=e=>{const s=document.getElementById('senha'),on=s.type==='password';s.type=on?'text':'password';e.currentTarget.textContent=on?'Ocultar':'Mostrar';e.currentTarget.setAttribute('aria-pressed',on)};
-const calm=matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-// Sistemas em órbita elíptica em volta do cartão (nomes e ícones tirados do array apps do app.js)
-// ponytail: lista copiada do app.js porque esta tela é pública e o app.js só abre depois do login; atualize junto
-const APPS=[["PominAI", "<path d=\"M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z\"/><path d=\"M20 3v4M22 5h-4M4 17v2M5 18H3\"/>"], ["Pomiro", "<rect x=\"9\" y=\"9.5\" width=\"6\" height=\"5\" rx=\"1.5\"/><circle cx=\"4.5\" cy=\"5\" r=\"2\"/><circle cx=\"19.5\" cy=\"5\" r=\"2\"/><circle cx=\"4.5\" cy=\"19\" r=\"2\"/><circle cx=\"19.5\" cy=\"19\" r=\"2\"/><path d=\"M6 6.5l3 3M18 6.5l-3 3M6 17.5l3-3M18 17.5l-3-3\"/>"], ["PominMKT", "<rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\"/><circle cx=\"9\" cy=\"9\" r=\"2\"/><path d=\"m21 15-3.09-3.09a2 2 0 0 0-2.82 0L6 21\"/>"], ["PominPRD", "<path d=\"M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z\"/><path d=\"M14 2v4a2 2 0 0 0 2 2h4\"/><path d=\"M10 9H8M16 13H8M16 17H8\"/>"], ["PominReport", "<path d=\"M3 3v16a2 2 0 0 0 2 2h16\"/><path d=\"m7 14 4-4 3 3 6-6\"/><path d=\"M15 7h5v5\"/>"], ["PominBI", "<path d=\"M19 13A8 8 0 1 1 11 5v8z\"/><path d=\"M13 3a8 8 0 0 1 8 8h-8z\"/>"], ["PominGoverna", "<path d=\"M12 3l7 3v5c0 4.5-3 8.3-7 10-4-1.7-7-5.5-7-10V6z\"/><path d=\"M9 12l2 2 4-4\"/>"], ["Reports CFO", "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M15.5 9H10.8a1.9 1.9 0 0 0 0 3.8h2.4a1.9 1.9 0 0 1 0 3.8H8.5\"/><path d=\"M12 6.5v11\"/>"], ["PominSprint", "<rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"3\"/><path d=\"M8 7v7M12 7v4M16 7v9\"/>"], ["PominDev", "<path d=\"m18 16 4-4-4-4\"/><path d=\"m6 8-4 4 4 4\"/><path d=\"m14.5 4-5 16\"/>"], ["PominSAC", "<path d=\"M3 11h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5Zm0 0a9 9 0 1 1 18 0m0 0v5a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3Z\"/><path d=\"M21 16v2a4 4 0 0 1-4 4h-5\"/>"], ["PominCHAT", "<path d=\"M14 9a2 2 0 0 1-2 2H6l-4 4V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2z\"/><path d=\"M18 9h2a2 2 0 0 1 2 2v11l-4-4h-6a2 2 0 0 1-2-2v-1\"/>"], ["PominCS", "<path d=\"M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z\"/><path d=\"M3.22 12H9.5l.5-1 2 4.5 2-7 1.5 3.5h5.27\"/>"]];
-(()=>{const host=document.querySelector('.apps'),track=document.querySelector('.track');
-host.innerHTML=APPS.map(([n,p],i)=>`<div class="app"><span class="tile" style="--i:-${i*.4}s"><svg viewBox="0 0 24 24" fill="none" stroke="url(#gold)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${p}</svg></span><b>${n}</b></div>`).join('');
-const els=[...host.children];let cx,cy,rx,ry;
-function size(){cx=innerWidth/2;cy=innerHeight/2;rx=Math.min(620,cx-90);ry=Math.min(380,cy-70);host.hidden=rx<330||ry<280;track.style.setProperty('--w',2*rx+'px');track.style.setProperty('--h',2*ry+'px');track.hidden=host.hidden}
-function place(t){els.forEach((el,i)=>{const a=t+i/els.length*6.2832,s=Math.sin(a),k=(s+1)/2;el.style.transform=`translate(${cx+rx*Math.cos(a)}px,${cy+ry*s}px) translate(-50%,-50%) scale(${.82+.2*k})`;el.style.opacity=.45+.55*k})}
-addEventListener('resize',()=>{size();if(calm)place(-1.57)});size();
-if(calm)place(-1.57);else requestAnimationFrame(function loop(now){place(now/120000*6.2832-1.57);requestAnimationFrame(loop)})})();
-
-// Céu de estrelas igual ao da página: 3 profundidades derivando + estrela cadente ocasional
-(()=>{const cv=document.getElementById('stars'),g=cv.getContext('2d');let w,h,last=performance.now(),next=last+3000,shot=null;
-const stars=Array.from({length:Math.min(320,innerWidth*innerHeight/5000|0)},()=>({u:Math.random(),v:Math.random(),z:Math.random()**2,t:Math.random()*7,gold:Math.random()<.2}));
-function draw(now,dt){g.clearRect(0,0,w,h);for(const s of stars){s.u=(s.u-(.03+s.z*.17)*dt/w+1)%1;s.v=(s.v+(.01+s.z*.05)*dt/h)%1;const a=(.2+s.z*.6)*(calm?1:.7+.3*Math.sin(now/700*(.4+s.z)+s.t));g.fillStyle=s.gold?`rgba(236,200,120,${a})`:`rgba(214,226,255,${a})`;g.beginPath();g.arc(s.u*w,s.v*h,.35+s.z*1.1,0,6.283);g.fill()}}
-function resize(){const d=Math.min(devicePixelRatio||1,2);w=innerWidth;h=innerHeight;cv.width=w*d;cv.height=h*d;g.setTransform(d,0,0,d,0,0);if(calm)draw(0,0)}
-function loop(now){const dt=Math.min(now-last,50)/16.7;last=now;draw(now,dt);
-if(!shot&&now>next)shot={x:w*(.35+Math.random()*.6),y:h*Math.random()*.45,p:0};
-if(shot){shot.p+=dt/70;if(shot.p>=1){shot=null;next=now+6000+Math.random()*8000}else{const x=shot.x-shot.p*300,y=shot.y+shot.p*120,l=g.createLinearGradient(x,y,x+100,y-40),a=Math.sin(shot.p*Math.PI)*.6;l.addColorStop(0,`rgba(255,238,200,${a})`);l.addColorStop(1,'rgba(255,238,200,0)');g.strokeStyle=l;g.lineWidth=1.2;g.beginPath();g.moveTo(x,y);g.lineTo(x+100,y-40);g.stroke()}}
-requestAnimationFrame(loop)}
-addEventListener('resize',resize);resize();if(!calm)requestAnimationFrame(loop)})();
-
-// Brilho suave que segue o mouse (só em mouse)
-if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!calm){const gl=document.body.appendChild(document.createElement('div'));gl.className='glow';gl.setAttribute('aria-hidden','true');
-let x=innerWidth/2,y=innerHeight/2,tx=x,ty=y,raf=0;const step=()=>{x+=(tx-x)*.12;y+=(ty-y)*.12;gl.style.translate=`${x}px ${y}px`;raf=Math.abs(tx-x)+Math.abs(ty-y)>.5?requestAnimationFrame(step):0};
-addEventListener('pointermove',e=>{tx=e.clientX;ty=e.clientY;gl.classList.add('on');raf||(raf=requestAnimationFrame(step))});document.addEventListener('mouseout',e=>{if(!e.relatedTarget)gl.classList.remove('on')})}
+document.querySelector('.mostrar').onclick=e=>{const s=document.getElementById('senha'),on=s.type==='password';s.type=on?'text':'password';e.currentTarget.textContent=on?'Ocultar':'Mostrar';e.currentTarget.setAttribute('aria-pressed',on)};
 </script>
 </body>
 </html>

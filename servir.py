@@ -15,6 +15,7 @@ válido por 30 dias) que o app.js põe no link como ?c=. Quem abre esse link ent
 sessão de cliente, que não recebe convite e por isso não gera links novos.
 """
 import hashlib
+import mimetypes
 import hmac
 import http.server
 import json
@@ -38,6 +39,9 @@ ALLOWED = ('/Pomin360 · Universo de soluções_files/', '/logos/')
 COOKIE, TTL, INVITE_TTL = 'pomin360', 12 * 3600, 30 * 24 * 3600
 VERSAO = str(int(time.time()))  # muda a cada deploy/reinício: vai no ?v= dos CSS/JS para o navegador não usar cópia velha
 LOGIN = open(os.path.join(ROOT, 'login.html'), encoding='utf-8').read()
+# Apresentação oficial (v3): o site gerado pelo Vite (npm run build). Depois do login, / abre ela.
+DIST = os.path.join(ROOT, 'apps', 'frontend', 'dist')
+PUBLICO = ('/images/',)  # a tela de login usa as imagens da v3
 BASE_IA = os.path.join(ROOT, 'ia', 'base.md')
 BASE = open(BASE_IA, encoding='utf-8').read() if os.path.exists(BASE_IA) else ''
 LIMITE_IA = 30  # perguntas por hora de cada sessão do comercial
@@ -119,15 +123,19 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             return self.redirect('/', f'{COOKIE}=; Max-Age=0; Path=/; HttpOnly; SameSite=Lax')
         if path == '/favicon.svg':  # público: a aba da tela de login também mostra o ícone
             return super().do_GET()
+        if path.startswith(PUBLICO):
+            return self.dist(path)
         kind = self.session()
         if not kind and path == '/' + PAGE and valid('convite', parse_qs(url.query).get('c', [''])[0]):
             return self.page('c', self.cookie('c'))
         if not kind:
             return self.login(200 if path in ('/', '/' + PAGE) else 401)
-        if path == '/':
-            return self.redirect('/' + quote(PAGE))
         if path == '/' + PAGE:
             return self.page(kind)
+        if os.path.isdir(DIST) and self.dist(path, so_se_existir=True):
+            return
+        if path == '/':  # sem o build da v3, cai na página antiga
+            return self.redirect('/' + quote(PAGE))
         if path == '/calculadora.html':  # preços, custo interno e margem: só o comercial
             return super().do_GET() if kind == 's' else self.send_error(404)
         if not path.startswith(ALLOWED):
@@ -267,6 +275,23 @@ class Handler(http.server.SimpleHTTPRequestHandler):
             html = html.replace('<!--CALCULADORA-->', CALCULADORA.replace('/calculadora.html', f'/calculadora.html?v={VERSAO}'), 1)
             html = html.replace('</head>', f'<script>window.POMIN360_CONVITE="{token("convite", INVITE_TTL)}"</script></head>', 1)
         self.send_html(200, html, cookie)
+
+    def dist(self, path, so_se_existir=False):
+        # serve um arquivo do build da v3; pasta vira index.html; nunca sai de DIST
+        alvo = os.path.normpath(os.path.join(DIST, path.lstrip('/')))
+        if os.path.isdir(alvo):
+            alvo = os.path.join(alvo, 'index.html')
+        if not alvo.startswith(DIST + os.sep) or not os.path.isfile(alvo):
+            return False if so_se_existir else self.send_error(404)
+        with open(alvo, 'rb') as f:
+            corpo = f.read()
+        self.send_response(200)
+        self.send_header('Content-Type', mimetypes.guess_type(alvo)[0] or 'application/octet-stream')
+        self.send_header('Content-Length', str(len(corpo)))
+        self.send_header('Cache-Control', 'no-store' if alvo.endswith('.html') else 'public, max-age=86400')
+        self.end_headers()
+        self.wfile.write(corpo)
+        return True
 
     def login(self, status, erro=False):
         self.send_html(status, LOGIN.replace('<!--ERRO-->', '<p class="erro" role="alert">Usuário ou senha incorretos.</p>' if erro else ''))
