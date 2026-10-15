@@ -1,0 +1,88 @@
+/* Trailers: o palco de cinema e o kit de interface que imita os sistemas Pomin (Oxanium, cartões, barra lateral) */
+.filme { position: relative; overflow: hidden; isolation: isolate; background: #050E18; color: #EAF3FF; aspect-ratio: 16 / 9; border-radius: 6px; font-family: Montserrat, system-ui, sans-serif; --s: .6; }
+.filme button { font: inherit; cursor: pointer; }
+
+.f-palco { position: absolute; inset: 0; display: grid; place-items: center; perspective: 1600px; background:
+  linear-gradient(180deg, #071827 0%, #050E18 62%, #040B13 100%); }
+.f-palco::after { content: ''; position: absolute; left: 12%; right: 12%; bottom: 4%; height: 10%; background: radial-gradient(50% 50% at 50% 50%, rgba(0, 0, 0, .55), transparent 70%); z-index: -1; }
+.f-camera { position: relative; width: calc(1280px * var(--s)); height: calc(800px * var(--s)); transform-style: preserve-3d; will-change: transform; border-radius: calc(12px * var(--s)); box-shadow: 0 calc(60px * var(--s)) calc(120px * var(--s)) -30px rgba(0, 0, 0, .7), 0 0 0 1px rgba(255, 255, 255, .06); }
+.f-tela { position: absolute; left: 0; top: 0; width: 1280px; height: 800px; transform: scale(var(--s)); transform-origin: 0 0; overflow: hidden; border-radius: 12px; }
+.f-tela [data-r] { filter: blur(0px); }
+
+.f-ponteiro { position: absolute; left: 0; top: 0; width: 26px; height: 26px; z-index: 60; pointer-events: none; }
+.f-ponteiro svg { width: 26px; height: 26px; filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .35)); }
+.f-ponteiro i { position: absolute; left: -14px; top: -14px; width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--c); opacity: 0; }
+
+.f-abertura { position: absolute; inset: 0; z-index: 3; background: #050E18; }
+.f-abertura img { width: 100%; height: 100%; object-fit: cover; }
+.f-abertura::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(3, 11, 20, .78) 0%, rgba(3, 11, 20, .35) 48%, transparent 75%), linear-gradient(0deg, rgba(3, 11, 20, .6), transparent 45%); }
+.f-cartela { position: absolute; left: 5.5%; bottom: 11%; max-width: 30ch; z-index: 1; }
+.f-cartela small { display: block; font: 600 clamp(.65rem, 1vw, .8rem) 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: #9BE7F5; margin-bottom: .8em; }
+.f-cartela p { margin: 0; font: 700 clamp(1.15rem, 2.5vw, 2.3rem)/1.12 Montserrat, sans-serif; letter-spacing: -.02em; text-wrap: balance; }
+
+.f-legenda { position: absolute; left: 50%; bottom: 4.5%; z-index: 4; margin: 0; max-width: 80%; transform: translate(-50%, 8px); opacity: 0; transition: opacity .35s, transform .35s; pointer-events: none; text-align: center; }
+.f-legenda span { display: inline; padding: .35em .7em; background: rgba(3, 11, 20, .86); box-decoration-break: clone; -webkit-box-decoration-break: clone; font: 600 clamp(.72rem, 1.15vw, 1rem)/1.6 Montserrat, sans-serif; color: #fff; border-left: 3px solid var(--c); }
+.f-legenda.on { opacity: 1; transform: translate(-50%, 0); }
+
+.f-final { position: absolute; inset: 0; z-index: 5; display: grid; place-items: center; padding: 6%; background: rgba(4, 12, 21, .88); opacity: 0; visibility: hidden; }
+.f-final > div { max-width: 40rem; text-align: center; }
+.f-final small { font: 600 .78rem 'JetBrains Mono', monospace; letter-spacing: .14em; text-transform: uppercase; color: var(--c); }
+.f-final h3 { margin: .4em 0 .5em; font: 800 clamp(1.3rem, 3vw, 2.6rem)/1.08 Montserrat, sans-serif; letter-spacing: -.025em; text-wrap: balance; }
+.f-numero { margin: 0 0 1.2em; color: #B9C7D6; font-size: clamp(.8rem, 1.2vw, 1rem); }
+.f-numero b { display: block; font-size: clamp(1.6rem, 3.4vw, 3rem); color: #fff; letter-spacing: -.03em; }
+.f-mercado { display: flex; flex-wrap: wrap; justify-content: center; gap: .4rem .6rem; margin: 0 0 1.4em; font-size: clamp(.7rem, 1vw, .85rem); }
+.f-mercado span { flex-basis: 100%; color: #8FA3B8; font: 500 .72rem 'JetBrains Mono', monospace; letter-spacing: .1em; text-transform: uppercase; }
+.f-mercado a { color: #EAF3FF; text-decoration: none; border: 1px solid rgba(234, 243, 255, .18); padding: .3em .7em; border-radius: 3px; }
+.f-mercado a em { font-style: normal; color: #FF8A6E; margin-left: .3em; }
+.f-saida { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; }
+.f-entrar { display: inline-flex; align-items: center; gap: .5em; padding: .8em 1.3em; background: #EAF3FF; color: #071827; font-weight: 700; text-decoration: none; border-radius: 4px; }
+.f-entrar svg { width: 1.1em; height: 1.1em; }
+.f-rever { padding: .8em 1.2em; background: none; border: 1px solid rgba(234, 243, 255, .3); color: #EAF3FF; border-radius: 4px; font-weight: 600; }
+
+/* Um botão só: Repetir (sempre à vista, discreto; por cima do cartão final) */
+.f-repetir { position: absolute; z-index: 7; right: 14px; bottom: 14px; display: inline-flex; align-items: center; gap: .45em; padding: .5em .9em; border: 1px solid rgba(234, 243, 255, .25); border-radius: 999px; background: rgba(3, 11, 20, .72); color: #EAF3FF; font: 600 .8rem Montserrat, sans-serif; cursor: pointer; transition: background .2s, border-color .2s; }
+.f-repetir svg { width: 1.05em; height: 1.05em; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+.f-repetir:hover { background: rgba(3, 11, 20, .92); border-color: #EAF3FF; }
+.filme.acabou .f-repetir { background: #EAF3FF; color: #071827; border-color: #EAF3FF; }
+.f-progresso { position: absolute; z-index: 6; left: 0; right: 0; bottom: 0; height: 3px; background: var(--c); transform: scaleX(0); transform-origin: 0 50%; opacity: .9; }
+@media (max-width: 760px) { .f-cartela p { font-size: 1rem; } }
+
+/* ---------- Kit de interface (imitação fiel do visual dos sistemas Pomin) ---------- */
+.ui { --fundo: #F5F7FA; --card: #FFFFFF; --borda: #E3E8EF; --texto: #0E1A2B; --suave: #6B7A90; --pri: #1F5FAE; --pri2: #3E86D6; --ok: #16A34A; --alerta: #D97706; --erro: #DC2626; --lado: #FFFFFF;
+  width: 1280px; height: 800px; display: grid; grid-template-columns: 58px 1fr; grid-template-rows: 54px 1fr; background: var(--fundo); color: var(--texto); font: 400 13px/1.4 Oxanium, system-ui, sans-serif; }
+.ui.escuro { --fundo: #08090A; --card: #111316; --borda: #1E2126; --texto: #E8EAED; --suave: #8A9099; --pri: #E8EAED; --pri2: #9BD3F5; --lado: #0B0C0E; }
+.ui * { box-sizing: border-box; }
+.ui svg { width: 18px; height: 18px; flex: none; }
+.ui-lado { grid-row: 1 / 3; display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 0; background: var(--lado); border-right: 1px solid var(--borda); }
+.ui-logo { width: 32px; height: 32px; border-radius: 9px; background: var(--c); color: #fff; display: grid; place-items: center; margin-bottom: 10px; }
+.ui-logo svg { width: 19px; height: 19px; stroke-width: 2; }
+.ui-nav { width: 34px; height: 34px; border-radius: 8px; display: grid; place-items: center; color: var(--suave); }
+.ui-nav.ativo { background: color-mix(in srgb, var(--pri2) 16%, transparent); color: var(--pri2); }
+.ui-nav.fim { margin-top: auto; }
+.ui-topo { display: flex; align-items: center; gap: 16px; padding: 0 20px; background: var(--card); border-bottom: 1px solid var(--borda); }
+.ui-trilha { display: flex; flex-direction: column; min-width: 180px; }
+.ui-trilha b { font-weight: 600; font-size: 13px; } .ui-trilha small { color: var(--suave); font-size: 11px; }
+.ui-busca { margin: 0 auto; width: 340px; height: 32px; border: 1px solid var(--borda); border-radius: 7px; display: flex; align-items: center; gap: 8px; padding: 0 10px; color: var(--suave); font-size: 12px; }
+.ui-busca svg { width: 15px; height: 15px; } .ui-busca span { flex: 1; }
+.ui-busca kbd { font: 500 10px 'JetBrains Mono', monospace; border: 1px solid var(--borda); border-radius: 4px; padding: 1px 5px; }
+.ui-acoes { display: flex; align-items: center; gap: 12px; color: var(--suave); }
+.ui-ico { display: grid; place-items: center; }
+.ui-corpo { position: relative; padding: 24px 30px; overflow: hidden; }
+.ui-h1 { margin: 0; font-size: 24px; font-weight: 600; letter-spacing: -.01em; }
+.ui-sub { margin: 2px 0 0; color: var(--suave); font-size: 12.5px; }
+.ui-card { position: relative; background: var(--card); border: 1px solid var(--borda); border-radius: 10px; padding: 14px 16px; }
+.ui-rot { font-size: 10.5px; letter-spacing: .07em; text-transform: uppercase; color: var(--suave); font-weight: 500; }
+.ui-btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 14px; border-radius: 7px; background: linear-gradient(180deg, var(--pri2), var(--pri)); color: #fff; font-weight: 600; font-size: 12px; white-space: nowrap; }
+.ui.escuro .ui-btn { background: var(--pri); color: #0B0C0E; }
+.ui-btn.sec { background: var(--card); color: var(--texto); border: 1px solid var(--borda); }
+.ui-btn svg { width: 15px; height: 15px; }
+.ui-badge { display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 999px; font-size: 10.5px; font-weight: 600; color: var(--b, var(--pri2)); background: color-mix(in srgb, var(--b, var(--pri2)) 14%, transparent); white-space: nowrap; }
+.ui-badge.ok { --b: var(--ok); } .ui-badge.alerta { --b: var(--alerta); } .ui-badge.erro { --b: var(--erro); }
+.ui-av { width: 28px; height: 28px; border-radius: 50%; background: var(--a, #7C8BA1); color: #fff; display: inline-grid; place-items: center; font-size: 10.5px; font-weight: 700; flex: none; }
+.ui-tabela { width: 100%; border-collapse: collapse; font-size: 12px; }
+.ui-tabela th { text-align: left; font-weight: 500; font-size: 10.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--suave); padding: 8px 10px; border-bottom: 1px solid var(--borda); }
+.ui-tabela td { padding: 10px; border-bottom: 1px solid var(--borda); }
+.ui-kpi b { display: block; font-size: 26px; font-weight: 600; letter-spacing: -.01em; margin-top: 4px; }
+.ui-barra { height: 6px; border-radius: 99px; background: var(--borda); overflow: hidden; }
+.ui-barra i { display: block; height: 100%; width: var(--w, 50%); background: var(--b, var(--pri2)); border-radius: inherit; }
+@media (max-width: 640px) { .filme { aspect-ratio: 1 / 1; } .f-cartela { left: 6%; right: 6%; bottom: 16%; } .f-legenda { max-width: 92%; bottom: 3%; } .f-legenda span { font-size: .7rem; } .f-repetir { right: 10px; bottom: 10px; font-size: .72rem; } }

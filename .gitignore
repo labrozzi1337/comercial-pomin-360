@@ -6,3 +6,13 @@ backup/
 __pycache__/
 # Prints e logs dos testes no navegador
 .playwright-mcp/
+
+# Monorepo Vite + Next
+node_modules/
+apps/*/node_modules/
+apps/*/.next/
+apps/*/dist/
+.env.*
+!.env.example
+*.tsbuildinfo
+supabase/.temp/

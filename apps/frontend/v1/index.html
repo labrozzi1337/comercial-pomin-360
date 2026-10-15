@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomin360 · O segundo cérebro da sua empresa</title>
+    <meta name="description" content="13 aplicações do Grupo Pomin conectadas: veja o antes e o depois, explore cada sistema e simule o investimento." />
+    <meta name="theme-color" content="#030B14" />
+    <link rel="icon" href="/images/icone-p360.webp" type="image/webp" />
+    <link rel="apple-touch-icon" href="/images/icone-p360.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300..900;1,300..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="/images/logo-p360.webp" />
+  </head>
+  <body>
+    <div class="preloader" id="preloader" aria-hidden="true">
+      <div class="pl-logo"><img src="/images/logo-p360.webp" alt="" width="520" height="154" /></div>
+      <div class="pl-bar"><i></i></div>
+      <div class="pl-count"><span id="pl-num">0</span>%</div>
+      <p class="pl-line">Conectando 13 aplicações</p>
+    </div>
+
+    <canvas id="webgl" aria-hidden="true"></canvas>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="cursor" aria-hidden="true"><i class="c-dot"></i><i class="c-ring"><span></span></i></div>
+    <div class="node-tip" id="node-tip" role="status" aria-live="polite"></div>
+    <div class="progress" aria-hidden="true"><i id="progress"></i></div>
+
+    <header class="topo" id="topo">
+      <a class="brand" href="#inicio" data-goto="#inicio" aria-label="Pomin360, voltar ao início"><img src="/images/logo-p360.webp" alt="P360" width="520" height="154" /></a>
+      <nav aria-label="Seções">
+        <a href="#antes-depois" data-goto="#antes-depois">Antes × Depois</a>
+        <a href="#aplicacoes" data-goto="#aplicacoes">Aplicações</a>
+        <a href="#substitui" data-goto="#substitui">O que substitui</a>
+        <a href="#simulador" data-goto="#simulador">Simulador</a>
+        <a href="#pergunte" data-goto="#pergunte">Dúvidas</a>
+        <a href="https://portal.pomin360.com.br/" target="_blank" rel="noopener">Portal ↗</a>
+      </nav>
+      <div class="head-actions">
+        <button class="ghost sm" id="presentation" type="button" title="Tela cheia para apresentar">Apresentar</button>
+        <button class="basket" id="basket" type="button">Minha seleção <b id="count">0</b></button>
+        <!--SAIR-->
+        <button class="menu-btn" id="menu-btn" type="button" aria-expanded="false" aria-controls="menu-mobile" aria-label="Abrir menu"><i></i><i></i></button>
+      </div>
+    </header>
+    <nav class="menu-mobile" id="menu-mobile" aria-label="Menu" hidden>
+      <a href="#antes-depois" data-goto="#antes-depois">Antes × Depois</a>
+      <a href="#aplicacoes" data-goto="#aplicacoes">Aplicações</a>
+      <a href="#substitui" data-goto="#substitui">O que substitui</a>
+      <a href="#por-que" data-goto="#por-que">Por que contratar</a>
+      <a href="#simulador" data-goto="#simulador">Simulador</a>
+      <a href="#pergunte" data-goto="#pergunte">Dúvidas</a>
+      <a href="https://portal.pomin360.com.br/" target="_blank" rel="noopener">Portal Pomin360 ↗</a>
+    </nav>
+
+    <div id="smooth-wrapper">
+      <div id="smooth-content">
+        <main>
+          <!-- 01 · Hero: o universo 3D fica no canvas de fundo -->
+          <section class="hero" id="inicio" aria-labelledby="hero-title">
+            <div class="hero-inner">
+              <p class="eyebrow"><span class="dot"></span>POMIN360 · HUB DE APLICAÇÕES DO GRUPO POMIN</p>
+              <h1 id="hero-title" class="split">O segundo cérebro<br />da sua <em>empresa.</em></h1>
+              <p class="typing-line">Seu próximo passo. <em class="typing" aria-live="off">Em todas as direções.</em></p>
+              <p class="lead reveal">13 aplicações com o mesmo login, o mesmo visual e a mesma central de chamados. Veja o que muda quando o Pomin360 entra e monte a combinação da sua empresa.</p>
+              <div class="cta-row reveal">
+                <a class="btn primary magnetic" href="#aplicacoes" data-goto="#aplicacoes"><span>Explorar as aplicações</span><i aria-hidden="true">→</i></a>
+                <a class="btn ghost magnetic" href="#antes-depois" data-goto="#antes-depois"><span>Ver o antes e o depois</span></a>
+              </div>
+            </div>
+            <ul class="hero-facts reveal" aria-label="Em números">
+              <li><b>13</b><span>aplicações conectadas</span></li>
+              <li><b>~1 sem.</b><span>de implantação por sistema</span></li>
+              <li><b>2 meses</b><span>para o pacote completo</span></li>
+            </ul>
+            <div class="scroll-cue" aria-hidden="true"><i></i><span>Role para entrar</span></div>
+          </section>
+
+          <!-- 02 · Manifesto: a frase que toda empresa conhece -->
+          <section class="manifesto" id="manifesto" aria-label="Manifesto">
+            <p class="quote split">“Vou levantar esse dado e te aviso.”</p>
+            <p class="scrub" id="scrub">Guarde bem essa frase. Ela aparece em toda empresa em que cada área usa uma ferramenta, cada ferramenta guarda um pedaço da verdade e a decisão espera alguém juntar as partes. O dado existe. O que falta é convergência.</p>
+          </section>
+
+          <!-- 03 · Antes × Depois (fixa na tela enquanto rola) -->
+          <section class="ad" id="antes-depois" aria-labelledby="ad-title">
+            <div class="ad-stage">
+              <img class="ad-img ad-antes" src="/images/antes-caos.webp" alt="Antes: mesa lotada de papéis, planilhas e notificações" width="1600" height="1067" />
+              <img class="ad-img ad-depois" src="/images/depois-ecossistema.webp" alt="Depois: mesa organizada com um único painel conectado" width="1600" height="1067" />
+              <div class="ad-shade"></div>
+              <div class="ad-copy">
+                <p class="eyebrow"><span class="ad-tag ad-tag-antes">ANTES</span><span class="ad-tag ad-tag-depois">DEPOIS</span> DO POMIN360</p>
+                <h2 id="ad-title" class="ad-h ad-h-antes">Cada área com a sua ferramenta.<br /><em>E a resposta sempre depois.</em></h2>
+                <h2 class="ad-h ad-h-depois" aria-hidden="true">Um só ecossistema.<br /><em>E a resposta no lugar certo.</em></h2>
+                <p class="ad-hint">Role para ver cada pedido encontrar o seu dono</p>
+              </div>
+              <div class="ad-bubbles" id="ad-bubbles"></div>
+              <div class="ad-cards" id="ad-cards"></div>
+            </div>
+          </section>
+
+          <!-- 04 · Convergência: as partículas se reorganizam no anel do P360 -->
+          <section class="conv" id="convergencia" aria-labelledby="conv-title">
+            <div class="conv-inner">
+              <p class="eyebrow"><span class="dot"></span>O QUE MUDA DE VERDADE</p>
+              <h2 id="conv-title" class="split">O dado existia.<br />Faltava <em>convergência.</em></h2>
+              <p class="lead reveal">Quando o SAC, o CHAT ou o CS precisam conversar com o financeiro, não há integração para fazer: é o mesmo ambiente, a mesma permissão e o mesmo jeito de evoluir.</p>
+              <ul class="conv-facts">
+                <li><b>1</b><span>login para todos os sistemas</span></li>
+                <li><b>1</b><span>visual: quem aprende um, usa os outros</span></li>
+                <li><b>1</b><span>central de chamados para tudo</span></li>
+                <li><b>13</b><span>aplicações para crescer sem trocar de fornecedor</span></li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- 05 · Aplicações em trilho horizontal -->
+          <section class="apps" id="aplicacoes" aria-labelledby="apps-title">
+            <div class="apps-head">
+              <div>
+                <p class="eyebrow"><span class="dot"></span>AS APLICAÇÕES</p>
+                <h2 id="apps-title" class="split">13 aplicações.<br /><em>Uma só casa.</em></h2>
+              </div>
+              <div class="filters" id="filters" role="toolbar" aria-label="Filtrar por categoria"></div>
+            </div>
+            <div class="h-wrap"><div class="h-track" id="h-track"></div></div>
+            <div class="h-progress" aria-hidden="true"><i id="h-bar"></i><span id="h-count">01 / 13</span></div>
+          </section>
+
+          <!-- 06 · O que substitui -->
+          <section class="replace" id="substitui" aria-labelledby="replace-title">
+            <div class="replace-copy">
+              <p class="eyebrow"><span class="dot"></span>O QUE O POMIN360 SUBSTITUI</p>
+              <h2 id="replace-title" class="split">Várias ferramentas.<br /><em>Um só ecossistema.</em></h2>
+              <p class="lead">Passe o mouse ou toque na ferramenta que a empresa usa hoje e veja qual aplicação Pomin360 faz o mesmo trabalho.</p>
+              <div class="swap" id="swap" aria-live="polite"></div>
+              <p class="note">As marcas citadas pertencem aos seus respectivos donos.</p>
+            </div>
+            <div class="logos" id="logos"></div>
+          </section>
+
+          <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee"></div></div>
+
+          <!-- 07 · Por que contratar -->
+          <section class="why" id="por-que" aria-labelledby="why-title">
+            <div class="sec-head">
+              <p class="eyebrow"><span class="dot"></span>POR QUE CONTRATAR O POMIN360</p>
+              <h2 id="why-title" class="split">Um ecossistema que<br /><em>já roda de verdade.</em></h2>
+              <p class="lead reveal">Sistemas conectados, com IA e implantação rápida. E os números abaixo não são promessa: são de uso real.</p>
+            </div>
+            <div class="why-grid">
+              <article class="why-card"><span class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span><h3>Tudo conectado</h3><p>Todos os sistemas compartilham login, visual e a mesma central de chamados. Quem aprende um, sabe usar os outros.</p></article>
+              <article class="why-card"><span class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><h3>Implantação rápida</h3><p>Cerca de uma semana por sistema avulso. O pacote completo fica pronto em até dois meses.</p></article>
+              <article class="why-card"><span class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9.94 15.5A2 2 0 0 0 8.5 14.06l-6.13-1.58a.5.5 0 0 1 0-.96L8.5 9.94A2 2 0 0 0 9.94 8.5l1.58-6.13a.5.5 0 0 1 .96 0l1.58 6.13a2 2 0 0 0 1.44 1.44l6.13 1.58a.5.5 0 0 1 0 .96l-6.13 1.58a2 2 0 0 0-1.44 1.44l-1.58 6.13a.5.5 0 0 1-.96 0z"/></svg></span><h3>IA no dia a dia</h3><p>Assistentes que conhecem os documentos da empresa, a Sofia dentro do PominCS, imagens no PominMKT e rascunhos no Pomiro.</p></article>
+              <article class="why-card"><span class="why-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg></span><h3>Começa pequeno, cresce junto</h3><p>Comece pela dor mais urgente e some sistemas depois. SAC, CHAT e CS juntos fecham o ciclo inteiro do cliente.</p></article>
+            </div>
+            <ul class="proof" id="proof" aria-label="Uso real dos sistemas"></ul>
+            <p class="note center">Uso real, contado direto nos bancos dos sistemas em 29/09/2026.</p>
+            <div class="timeline" aria-label="Prazo de implantação">
+              <div class="tl-row"><span class="tl-label">Sistema avulso</span><div class="tl-bar"><i class="tl-fill tl-one"></i></div><b>~1 semana</b></div>
+              <div class="tl-row"><span class="tl-label">Pacote completo · 13 sistemas</span><div class="tl-bar"><i class="tl-fill tl-all"></i></div><b>até 2 meses</b></div>
+            </div>
+          </section>
+
+          <!-- 08 · Simulador (calculadora comercial) -->
+          <section class="calc" id="simulador" aria-labelledby="calc-title">
+            <div class="sec-head">
+              <p class="eyebrow"><span class="dot"></span>SIMULADOR DE INVESTIMENTO</p>
+              <h2 id="calc-title" class="split">Veja o preço<br /><em>se formar na sua frente.</em></h2>
+              <p class="lead reveal">Três passos: o tamanho da operação, o nível de serviço e as aplicações. Cada número abaixo mostra de onde veio.</p>
+            </div>
+            <div class="calc-layout">
+              <div class="calc-main">
+                <article class="calc-card">
+                  <header><b class="step">1</b><div><h3>Tamanho da operação</h3><p>Quantas pessoas vão usar e o que já está incluso.</p></div></header>
+                  <div class="account-grid">
+                    <div class="field hl"><label for="users">Usuários <button class="info" type="button" data-info="usuarios" aria-label="Como a quantidade de usuários entra no preço">i</button></label><div class="stepper" data-step="1"><button type="button" aria-label="Diminuir">−</button><input id="users" type="number" min="1" value="20" inputmode="numeric" /><button type="button" aria-label="Aumentar">+</button></div><small>Total previsto para a conta.</small></div>
+                    <div class="field"><label for="includedUsers">Inclusos <button class="info" type="button" data-info="inclusos" aria-label="Como os usuários inclusos entram no preço">i</button></label><div class="stepper" data-step="1"><button type="button" aria-label="Diminuir">−</button><input id="includedUsers" type="number" min="0" value="2" inputmode="numeric" /><button type="button" aria-label="Aumentar">+</button></div><small>Franquia já incluída.</small></div>
+                    <div class="field"><label for="userFactor">Fator por extra (%) <button class="info" type="button" data-info="extra" aria-label="Como o fator por usuário extra entra no preço">i</button></label><div class="stepper" data-step="0.5"><button type="button" aria-label="Diminuir">−</button><input id="userFactor" type="number" min="0" max="100" step="0.1" value="3" inputmode="decimal" /><button type="button" aria-label="Aumentar">+</button></div><small>% dos produtos por usuário acima da franquia.</small></div>
+                    <div class="field"><label for="discount">Desconto (%) <button class="info" type="button" data-info="desconto" aria-label="Como o desconto entra no preço">i</button></label><div class="stepper" data-step="1"><button type="button" aria-label="Diminuir">−</button><input id="discount" type="number" min="0" max="100" value="0" inputmode="numeric" /><button type="button" aria-label="Aumentar">+</button></div><small>Aplicado no fim, sobre tudo.</small></div>
+                  </div>
+                </article>
+                <article class="calc-card">
+                  <header><b class="step">2</b><div><h3>Nível de serviço</h3><p>IA, infraestrutura e suporte entram como valor fixo mensal.</p></div></header>
+                  <div class="plans" id="plans"></div>
+                </article>
+                <article class="calc-card">
+                  <header><b class="step">3</b><div><h3>Aplicações</h3><p>Marque o que entra na proposta. O preço-base de cada uma é editável com senha.</p></div>
+                    <div class="mini-actions"><button type="button" class="chip-btn" id="selectAll">Selecionar todas</button><button type="button" class="chip-btn" id="clearAll">Limpar</button></div></header>
+                  <div class="product-grid" id="products"></div>
+                </article>
+              </div>
+              <aside class="summary" id="summary" aria-label="Resumo da proposta">
+                <div class="sum-top"><span class="live"><i></i>AO VIVO</span><span class="sum-label">Mensalidade estimada</span></div>
+                <div class="grand" id="total">R$ 0,00</div>
+                <p class="sum-hint">Preço sugerido antes de impostos · <span id="perUser">R$ 0,00 por usuário</span></p>
+                <div class="stack" id="stack" aria-hidden="true"></div>
+                <ul class="rows" id="rows"></ul>
+                <details class="how"><summary>Como chegamos neste valor</summary><ol id="how"></ol></details>
+                <div class="deploy" id="deploy"></div>
+                <details class="internal"><summary>Visão interna · custo e margem</summary>
+                  <div class="kpis">
+                    <div><small>Custo interno</small><b id="costTotal">R$ 0,00</b></div>
+                    <div><small>Margem bruta</small><b class="good" id="marginValue">R$ 0,00</b></div>
+                    <div><small>Margem %</small><b class="good" id="marginPct">0%</b></div>
+                    <div><small>Aplicações</small><b id="selectedCount">0</b></div>
+                  </div>
+                  <p class="note">Regra comercial: o preço da aplicação representa valor agregado. Usuários, IA e infraestrutura absorvem escala e consumo.</p>
+                </details>
+                <button type="button" class="btn primary wide magnetic" id="hireBtn"><span>Contratar</span><i aria-hidden="true">→</i></button>
+              </aside>
+            </div>
+          </section>
+
+          <!-- 09 · Academy -->
+          <section class="academy" id="academy" aria-labelledby="academy-title">
+            <div class="sec-head">
+              <p class="eyebrow"><span class="dot"></span>POMIN360 ACADEMY</p>
+              <h2 id="academy-title" class="split">Aprenda com quem<br /><em>cuida dos números.</em></h2>
+              <p class="lead reveal">Comece pelo vídeo da Jornada da Reforma Tributária e continue nos ambientes do Grupo Pomin.</p>
+            </div>
+            <div class="learn">
+              <figure class="video"><div class="frame"><iframe data-src="https://www.youtube-nocookie.com/embed/blEte36ldaA?rel=0" title="Jornada da Reforma Tributária · Solutta Consultoria" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></div>
+                <figcaption><span><b>Jornada da Reforma Tributária</b> · Solutta Consultoria</span><a href="https://www.youtube.com/watch?v=blEte36ldaA" target="_blank" rel="noopener">Assistir no YouTube ↗</a></figcaption></figure>
+              <div class="aux">
+                <a class="aux-card" href="https://portal.pomin360.com.br" target="_blank" rel="noopener"><span class="tag">PORTAL CFO</span><h3>CFO Insights 2026</h3><p>A rede de quem viveu o evento: participantes, conversas e os conteúdos do palco.</p><span class="go">Acessar o portal ↗</span></a>
+                <a class="aux-card" href="https://jornadadareformatributaria.com.br/" target="_blank" rel="noopener"><span class="tag">JORNADA</span><h3>Reforma Tributária</h3><p>Trilha para preparar a sua empresa para a reforma, com IA, especialistas e aplicação prática.</p><span class="go">Começar a jornada ↗</span></a>
+              </div>
+            </div>
+          </section>
+
+          <!-- 10 · IA que responde dúvidas -->
+          <section class="ask" id="pergunte" aria-labelledby="ask-title">
+            <div class="sec-head">
+              <p class="eyebrow"><span class="dot"></span>TIRE SUAS DÚVIDAS</p>
+              <h2 id="ask-title" class="split">Pergunte sobre<br /><em>qualquer sistema Pomin.</em></h2>
+              <p class="lead reveal">A IA responde lendo a documentação de cada sistema do Grupo Pomin.</p>
+            </div>
+            <div class="ask-box">
+              <div class="ask-log" id="ask-log" aria-live="polite"><div class="msg ia">Oi! Pergunte o que quiser sobre os sistemas do Pomin360: o que cada um faz, o que ele substitui e como é a implantação.</div></div>
+              <div class="ask-chips" id="ask-chips"><button type="button">O que o PominCHAT faz?</button><button type="button">Qual sistema substitui o Jira?</button><button type="button">Como funciona o PominSAC?</button><button type="button">Quanto tempo leva a implantação?</button><button type="button">O PominBI conecta com quais dados?</button></div>
+              <form class="ask-form" id="ask-form"><input id="ask-q" maxlength="2000" autocomplete="off" placeholder="Escreva sua pergunta" aria-label="Sua pergunta" /><button class="btn primary" type="submit"><span>Perguntar</span></button></form>
+              <p class="note">Respostas geradas por IA a partir da documentação dos sistemas. Condições comerciais são confirmadas com o comercial.</p>
+            </div>
+          </section>
+
+          <!-- 11 · Fechamento -->
+          <section class="final" id="final" aria-labelledby="final-title">
+            <p class="eyebrow"><span class="dot"></span>COMECE PELO QUE VOCÊ PRECISA</p>
+            <h2 id="final-title" class="split big">Uma solução.<br /><em>Ou o ecossistema inteiro.</em></h2>
+            <p class="lead reveal">Escolha aplicações e módulos durante a conversa. A sua combinação acompanha você até a proposta.</p>
+            <div class="cta-row reveal center">
+              <button class="btn primary magnetic" id="configure" type="button"><span>Montar minha solução</span><i aria-hidden="true">＋</i></button>
+              <button class="btn ghost magnetic" id="all" type="button"><span>Ver o pacote completo</span></button>
+            </div>
+          </section>
+        </main>
+
+        <footer class="rodape">
+          <img src="/images/logo-p360.webp" alt="P360" width="520" height="154" loading="lazy" />
+          <p>Tecnologia que conecta todas as pontas.</p>
+          <div class="rodape-row"><span>GRUPO POMIN</span><span>Pomin360 · Hub de aplicações</span><span>EXPERIÊNCIA COMERCIAL · V2</span></div>
+        </footer>
+      </div>
+    </div>
+
+    <dialog class="chapter" id="chapter" aria-label="Aplicação"></dialog>
+    <dialog class="demo" id="demo" aria-label="Demonstração ao vivo"></dialog>
+    <dialog class="sheet" id="cart" aria-label="Minha seleção"></dialog>
+    <dialog class="sheet" id="questionnaire" aria-label="Monte sua solução"></dialog>
+    <dialog class="sheet small" id="infoModal" aria-labelledby="modalTitle"><button class="close" type="button" aria-label="Fechar">×</button><span class="tag">COMO ENTRA NO PREÇO</span><h2 id="modalTitle">Informações</h2><p id="modalDescription"></p><div class="modal-list" id="modalList"></div></dialog>
+    <dialog class="sheet small" id="passwordModal" aria-labelledby="passwordModalTitle"><button class="close" type="button" aria-label="Fechar">×</button><span class="tag">EDIÇÃO PROTEGIDA</span><h2 id="passwordModalTitle">Alterar preço-base</h2><p>Digite a senha comercial para liberar a edição deste preço.</p><label class="field-label" for="pricePassword">Senha</label><input class="input" id="pricePassword" type="password" autocomplete="off" placeholder="Digite a senha" /><p class="err" id="passwordError" role="alert"></p><div class="actions"><button type="button" class="btn ghost" id="passwordCancel"><span>Cancelar</span></button><button type="button" class="btn primary" id="passwordConfirm"><span>Liberar edição</span></button></div></dialog>
+    <dialog class="sheet small" id="hireModal" aria-labelledby="hireTitle"><button class="close" type="button" aria-label="Fechar">×</button><span class="tag">ASSINATURA MENSAL</span><h2 id="hireTitle">Contratar por <span id="hireValue">R$ 0,00</span>/mês</h2>
+      <form id="hireForm" novalidate><p>Dados de quem contrata. Ao confirmar, abre o link de pagamento do Mercado Pago com a assinatura mensal.</p>
+        <label class="field-label" for="hireName">Nome do responsável</label><input class="input" id="hireName" name="nome" required maxlength="150" autocomplete="name" />
+        <label class="field-label" for="hireEmail">E-mail</label><input class="input" id="hireEmail" name="email" type="email" required maxlength="200" autocomplete="email" placeholder="nome@empresa.com.br" />
+        <label class="field-label" for="hirePhone">WhatsApp ou telefone</label><input class="input" id="hirePhone" name="fone" type="tel" required maxlength="20" inputmode="tel" autocomplete="tel" placeholder="(11) 99999-9999" />
+        <label class="field-label" for="hireDoc">CPF ou CNPJ da empresa</label><input class="input" id="hireDoc" name="doc" required maxlength="18" inputmode="numeric" placeholder="000.000.000-00 ou 00.000.000/0000-00" />
+        <p class="err" id="hireError" role="alert"></p><div class="hire-link" id="hireLink" hidden></div>
+        <div class="actions"><button type="button" class="btn ghost" id="hireCancel"><span>Cancelar</span></button><button type="submit" class="btn primary" id="hireSubmit"><span>Gerar link de pagamento</span></button></div></form></dialog>
+    <div class="toast" id="toast" role="status"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

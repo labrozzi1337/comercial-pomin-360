@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guia do apresentador · Pomin360</title>
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#0D1F31" />
+    <link rel="icon" href="/images/icone-p360.webp" type="image/webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet" />
+  </head>
+  <body class="pg-guia">
+    <header class="g-topo">
+      <img src="/images/logo-p360.webp" alt="P360" width="520" height="154" />
+      <span class="rotulo">Guia do apresentador</span>
+      <span class="g-tempo"><b id="tempo">00:00</b><button type="button" id="tempo-bt">Iniciar</button><button type="button" id="tempo-zerar" aria-label="Zerar o tempo">↺</button></span>
+    </header>
+    <section class="g-reuniao">
+      <label>Cliente <input id="cliente" type="text" placeholder="Nome do cliente" autocomplete="off" /></label>
+      <label>Rota <select id="rota"></select></label>
+    </section>
+    <nav class="g-abas" role="tablist">
+      <button type="button" role="tab" data-aba="cena" aria-selected="true">Cena</button>
+      <button type="button" role="tab" data-aba="apps" aria-selected="false">Aplicações</button>
+      <button type="button" role="tab" data-aba="precos" aria-selected="false">Preços</button>
+      <button type="button" role="tab" data-aba="acessos" aria-selected="false">Acessos</button>
+    </nav>
+    <main>
+      <section data-painel="cena">
+        <div class="g-nav"><button type="button" id="g-ant">← Anterior</button><span id="g-onde">Abra a apresentação</span><button type="button" id="g-prox">Próxima →</button></div>
+        <div id="g-cena"></div>
+        <h3 class="g-h">Ir para a cena</h3><ol class="g-cenas" id="g-cenas"></ol>
+      </section>
+      <section data-painel="apps" hidden><div class="g-apps" id="g-apps"></div><div id="g-app"></div></section>
+      <section data-painel="precos" hidden><div id="g-precos"></div></section>
+      <section data-painel="acessos" hidden><div id="g-acessos"></div></section>
+    </main>
+    <script type="module" src="../guia.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomin360 · O molho de chaves</title>
+    <meta name="description" content="Toda empresa carrega um molho de chaves. O Pomin360 é uma chave só: tudo em um, com o mesmo acesso." />
+    <meta name="theme-color" content="#071827" />
+    <link rel="icon" href="/images/icone-p360.webp" type="image/webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..900&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@500;600&family=Caveat:wght@600&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="/images/v3-molho-logos.webp" />
+  </head>
+  <body>
+    <!-- menu âncora transparente: uma entrada por cena e o guia do apresentador -->
+    <header class="menu" id="menu">
+      <a class="v3-marca" href="#molho" data-cena-ir="0" aria-label="Pomin360, voltar ao início"><img src="/images/logo-p360.webp" alt="P360" width="520" height="154" /></a>
+      <nav class="ancoras" id="ancoras" aria-label="Seções da apresentação"></nav>
+      <button type="button" class="menu-guia" id="bt-guia" title="Guia do apresentador (tecla G)"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2z" /><path d="M4 19V5M8 7h6M8 11h6" /></svg>Guia</button>
+    </header>
+
+    <div class="controle" aria-label="Navegação">
+      <button type="button" id="ant" aria-label="Cena anterior">←</button>
+      <span id="onde" aria-live="polite"></span>
+      <button type="button" id="prox" aria-label="Próxima cena">→</button>
+      <button type="button" id="bt-precos" class="controle-precos" title="Tabela de preços, só para o comercial (tecla P)" aria-label="Tabela de preços (comercial)"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></button>
+    </div>
+
+    <div id="smooth-wrapper"><div id="smooth-content"><main>
+
+      <!-- 0 · O molho, preso no porta-chaves da parede -->
+      <section class="cena molho" id="molho" data-nome="O molho">
+        <div class="molho-texto">
+          <p class="rotulo molho-rotulo"><i aria-hidden="true"></i>Pomin360 · <span id="para-cliente">apresentação comercial</span></p>
+          <h1 class="titulo linhas">Toda empresa<br />carrega um<br /><em>molho de chaves</em>.</h1>
+          <p class="molho-sub">Uma chave para cada coisa:</p>
+          <ul class="molho-tags" aria-label="Uma chave para cada área"><li>Projetos</li><li>Atendimento</li><li>Chat</li><li>Números</li><li>Clientes</li><li>IA</li></ul>
+          <p class="molho-sub">E cada uma com a sua senha, a sua fatura e o seu dono.</p>
+        </div>
+        <p class="molho-rolar" aria-hidden="true"><i></i>Role para abrir os armários</p>
+        <div class="parede" id="parede">
+          <img class="porta-chaves" src="/images/v3-porta-chaves.webp" alt="" width="1536" height="1024" />
+          <!-- --peg: posição do pino no porta-chaves; --ax/--ay: ponto do aro que encosta no pino (medidos em cada imagem) -->
+          <div class="molho-pendulo pequeno p1" style="--peg:.1452;--ax:.501;--ay:.1396"><img src="/images/v3-molho-a.webp" alt="" width="1024" height="1536" /></div>
+          <div class="molho-pendulo pequeno p2" style="--peg:.3223;--ax:.4902;--ay:.1865"><img src="/images/v3-molho-b.webp" alt="" width="1024" height="1536" /></div>
+          <div class="molho-pendulo" id="pendulo" style="--peg:.4993;--ax:.501;--ay:.0576"><img src="/images/v3-molho-logos.webp" alt="Um molho pesado de chaves, cada uma com o logo de uma ferramenta, pendurado no porta-chaves da parede ao lado de outros molhos" width="1024" height="1536" /></div>
+          <div class="molho-pendulo pequeno p4" style="--peg:.6764;--ax:.5;--ay:.1104"><img src="/images/v3-molho-c.webp" alt="" width="1024" height="1536" /></div>
+          <div class="molho-pendulo pequeno p5" style="--peg:.8535;--ax:.5117;--ay:.1465"><img src="/images/v3-molho-d.webp" alt="" width="1024" height="1536" /></div>
+          <img class="pino p1" src="/images/v3-pino.webp" alt="" width="200" height="200" style="--peg:.1452" />
+          <img class="pino p2" src="/images/v3-pino.webp" alt="" width="200" height="200" style="--peg:.3223" />
+          <img class="pino" src="/images/v3-pino.webp" alt="" width="200" height="200" style="--peg:.4993" />
+          <img class="pino p4" src="/images/v3-pino.webp" alt="" width="200" height="200" style="--peg:.6764" />
+          <img class="pino p5" src="/images/v3-pino.webp" alt="" width="200" height="200" style="--peg:.8535" />
+        </div>
+      </section>
+
+      <!-- 1 · Cada chave, um armário: as perguntas trancadas viram respostas -->
+      <section class="cena perguntas" id="armarios" data-nome="Cada chave, um armário">
+        <img class="pg-antes" src="/images/v3-armarios.webp" alt="" />
+        <div class="pg-depois" aria-hidden="true"><img src="/images/v3-chave-p360-recorte.webp" alt="" width="1536" height="1024" /></div>
+        <div class="pg-sombra"></div>
+        <div class="pg-texto">
+          <p class="rotulo"><span class="pg-tag antes">Hoje</span><span class="pg-tag depois">Com o Pomin360</span></p>
+          <h2 class="titulo-m pg-h antes">Cada chave abre um armário. <em>E cada armário guarda uma pergunta.</em></h2>
+          <h2 class="titulo-m pg-h depois" aria-hidden="true">Uma chave só. <em>E cada pergunta encontra a sua resposta.</em></h2>
+          <p class="pg-dica">Continue rolando para abrir os armários</p>
+        </div>
+        <div class="pg-baloes" id="baloes"></div>
+        <div class="pg-cards" id="pg-cards"></div>
+      </section>
+
+      <!-- 2 · A pergunta simples -->
+      <section class="cena pergunta" id="pergunta" data-nome="A pergunta simples">
+        <div class="pergunta-cab">
+          <p class="rotulo">02 · Uma pergunta simples</p>
+          <p class="relogio" id="relogio" aria-hidden="true">09:12</p>
+        </div>
+        <div class="pergunta-trilho" id="pergunta-trilho"></div>
+      </section>
+
+      <!-- 3 · As suas chaves -->
+      <section class="cena chaves papel" id="chaves" data-nome="As suas chaves">
+        <div class="chaves-cab">
+          <p class="rotulo">03 · As suas chaves</p>
+          <h2 class="titulo-m linhas">Quais dessas chaves estão <em>no seu bolso</em> hoje?</h2>
+          <p class="texto">Toque nas que a sua empresa paga. A conta, a gente faz junto.</p>
+        </div>
+        <div class="galeria" id="galeria" role="group" aria-label="Ferramentas que a empresa paga hoje"></div>
+        <div class="bolso" id="bolso" aria-live="polite"></div>
+      </section>
+
+      <!-- 4 · O peso do molho -->
+      <section class="cena peso" id="peso" data-nome="O peso do molho">
+        <div class="peso-cab">
+          <p class="rotulo">04 · O peso do molho</p>
+          <h2 class="titulo-m">Por pessoa. Por mês. <em>Para sempre.</em></h2>
+          <label class="peso-pessoas">Quantas pessoas usam
+            <span class="passador"><button type="button" data-mais="-5" aria-label="Menos 5">−</button><input id="pessoas" type="number" min="1" max="5000" value="50" inputmode="numeric" /><button type="button" data-mais="5" aria-label="Mais 5">+</button></span>
+          </label>
+        </div>
+        <div class="faturas" id="faturas"></div>
+        <div class="peso-total" id="peso-total" aria-live="polite"></div>
+      </section>
+
+      <!-- 5 · Uma chave só: as chaves entram no aro e o aro vira a chave P360 -->
+      <section class="cena virada" id="virada" data-nome="Uma chave só">
+        <div class="virada-palco" id="virada-palco">
+          <svg class="aro" viewBox="0 0 200 200" aria-hidden="true"><defs><linearGradient id="aco" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E8EDF2" /><stop offset=".5" stop-color="#8E9AA6" /><stop offset="1" stop-color="#DCE3EA" /></linearGradient></defs><circle cx="100" cy="100" r="62" /></svg>
+          <div class="virada-chaves" id="virada-chaves"></div>
+          <div class="chave-p360" id="chave-p360"><img src="/images/v3-chave-p360-recorte.webp" alt="A chave P360: a cabeça é o anel do logo, em degradê ciano e verde" width="1536" height="1024" /></div>
+        </div>
+        <div class="virada-texto">
+          <p class="rotulo virada-0">05 · Uma chave só</p>
+          <h2 class="titulo virada-1">Tudo em um.<br /><em>Uma chave só.</em></h2>
+          <p class="virada-2">O Pomin360 junta numa plataforma só o que hoje está espalhado em várias ferramentas: atendimento, projetos, finanças, clientes e IA. <b>Um login, um contrato e uma fatura, em reais.</b></p>
+        </div>
+      </section>
+
+      <!-- 6 · O lugar -->
+      <section class="cena lugar" id="lugar" data-nome="O lugar">
+        <div class="lugar-cab">
+          <p class="rotulo">06 · O lugar</p>
+          <h2 class="titulo-m linhas">Lá dentro, <em>as portas são internas</em>.</h2>
+          <ol class="fluxo" id="fluxo"></ol>
+        </div>
+        <div class="planta" id="planta"><svg class="planta-linhas" id="planta-linhas" aria-hidden="true"></svg></div>
+        <p class="lugar-fecho"><span>Uma chave.</span> <span>Um acesso.</span> <span>Os mesmos dados.</span> <span>A mesma IA.</span> <span>Um contrato, em reais.</span></p>
+      </section>
+
+      <!-- 7 · Os confrontos: o mapa do que o Pomin360 substitui -->
+      <section class="cena nomes papel" id="nomes" data-nome="Os confrontos">
+        <div class="nomes-cab">
+          <p class="rotulo">07 · Os confrontos</p>
+          <h2 class="titulo linhas">Sim, vamos falar de <em>nomes</em>.</h2>
+          <p class="texto">Toque no Pomin360 para abrir as aplicações. Depois, toque em cada uma para ver o que ela substitui.</p>
+        </div>
+        <div class="mapa" id="mapa"><p class="mapa-titulo">O mercado</p><svg class="mapa-linhas" id="mapa-linhas" aria-hidden="true"></svg></div>
+        <p class="mapa-resumo" id="mapa-resumo" aria-live="polite"></p>
+        <p class="nota-fontes" id="nota-fontes"></p>
+      </section>
+
+      <!-- 8 · As aplicações -->
+      <section class="cena aplicacoes" id="aplicacoes" data-nome="As aplicações">
+        <div class="aplicacoes-cab">
+          <p class="rotulo">08 · As aplicações</p>
+          <h2 class="titulo-m linhas">Tudo em um lugar só. <em>Escolha por onde entrar.</em></h2>
+          <p class="texto">Cada uma tem o seu vídeo, o antes e depois e o acesso ao sistema de verdade.</p>
+        </div>
+        <div class="vitrine" id="vitrine"></div>
+      </section>
+
+      <!-- 9 · Já roda aqui dentro: o placar -->
+      <section class="cena numeros" id="numeros" data-nome="Já roda aqui dentro">
+        <div class="numeros-cab">
+          <p class="rotulo">09 · Uso real</p>
+          <h2 class="titulo-m linhas">Não é promessa. <em>É placar.</em></h2>
+          <p class="selo-real"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5" /></svg>Dado real, contado direto nos bancos dos sistemas em 29 de setembro de 2026</p>
+        </div>
+        <ol class="placar" id="placar"></ol>
+      </section>
+
+      <!-- 10 · Devolva o molho -->
+      <section class="cena fim" id="fim" data-nome="Devolva o molho">
+        <div class="fim-lixo" id="fim-lixo" aria-hidden="true"></div>
+        <div class="fim-direita">
+          <img class="fim-chave" src="/images/v3-chave-p360-recorte.webp" alt="A chave P360" width="1536" height="1024" loading="lazy" />
+          <div class="fim-texto">
+            <h2 class="titulo">Devolva o molho.<br /><em>Fique com a chave.</em></h2>
+            <p class="texto">Próximo passo: escolher por onde começar.</p>
+            <div class="fim-acoes" id="fim-acoes"></div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="rodape">
+        <div class="rodape-marca"><img src="/images/logo-p360.webp" alt="Pomin360" width="520" height="154" /><p>Tudo em um. <em>Uma chave só.</em></p></div>
+        <nav class="rodape-links" aria-label="Ferramentas do comercial">
+          <button type="button" class="rodape-sim" data-simulador><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span><b>Simulador de investimento</b><small>Uso interno do comercial</small></span></button>
+          <button type="button" class="rodape-link" data-abrir-guia>Guia do apresentador</button>
+        </nav>
+        <p class="rodape-nota">Grupo Pomin · 2026. Preços dos concorrentes: tabela pública consultada em 14/10/2026. Nomes e logos citados são marcas dos seus donos.</p>
+      </footer>
+    </main></div></div>
+
+    <aside class="gaveta" id="gaveta" aria-label="Guia do apresentador" aria-hidden="true">
+      <div class="gaveta-cab"><span class="rotulo">Guia do apresentador</span><span><button type="button" id="guia-janela">Abrir em outra janela</button> <button type="button" id="fechar-guia">Fechar</button></span></div>
+      <div id="guia"></div>
+    </aside>
+    <dialog class="precos-dlg" id="precos" aria-label="Tabela de preços"></dialog>
+
+    <script type="module" src="/v3/main.ts"></script>
+  </body>
+</html>

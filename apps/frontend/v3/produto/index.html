@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomin360 · Aplicação</title>
+    <meta name="description" content="O vídeo, o antes e depois, o passo a passo e quem cobra hoje pelo que cada aplicação do Pomin360 resolve." />
+    <meta name="theme-color" content="#071827" />
+    <link rel="icon" href="/images/icone-p360.webp" type="image/webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400..900&family=Instrument+Serif:ital@1&family=JetBrains+Mono:wght@500;600&family=Oxanium:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="v3-topo">
+      <a class="v3-marca" href="/#aplicacoes" aria-label="Voltar à apresentação"><img src="/images/logo-p360.webp" alt="P360" width="520" height="154" /></a>
+      <nav aria-label="Aplicação">
+        <a class="bt bt-linha esconde-m" id="voltar" href="/#aplicacoes">← Apresentação</a>
+        <a class="bt bt-linha" id="anterior" aria-label="Aplicação anterior">‹</a>
+        <a class="bt bt-linha" id="proxima" aria-label="Próxima aplicação">›</a>
+        <span class="sep"></span>
+        <button type="button" class="bt bt-linha" id="abrir-guia" title="Guia do apresentador (tecla G)">Guia</button>
+        <a class="bt bt-claro" id="entrar" target="_blank" rel="noopener">Entrar no sistema</a>
+      </nav>
+    </header>
+    <main id="produto"></main>
+    <footer class="rodape">
+      <div class="rodape-marca"><img src="/images/logo-p360.webp" alt="Pomin360" width="520" height="154" /><p>Tudo em um. <em>Uma chave só.</em></p></div>
+      <nav class="rodape-links" aria-label="Ferramentas do comercial">
+        <button type="button" class="rodape-sim" data-simulador><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span><b>Simulador de investimento</b><small>Uso interno do comercial</small></span></button>
+        <button type="button" class="rodape-link" data-guia>Guia do apresentador</button>
+        <a class="rodape-link" href="/#aplicacoes">Voltar à apresentação</a>
+      </nav>
+      <p class="rodape-nota">Grupo Pomin · 2026. Preços dos concorrentes: tabela pública consultada em 14/10/2026. Nomes e logos citados são marcas dos seus donos.</p>
+    </footer>
+    <dialog class="precos-dlg" id="precos" aria-label="Simulador de investimento"></dialog>
+    <aside class="gaveta" id="gaveta" aria-label="Guia do apresentador" aria-hidden="true">
+      <div class="gaveta-cab"><span class="rotulo">Guia do apresentador</span><span><button type="button" id="guia-janela">Abrir em outra janela</button> <button type="button" id="fechar-guia">Fechar</button></span></div>
+      <div id="guia"></div>
+    </aside>
+    <script type="module" src="../produto.ts"></script>
+  </body>
+</html>

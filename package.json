@@ -1,0 +1,14 @@
+{
+  "name": "pomin360-comercial",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": ["apps/*"],
+  "scripts": {
+    "dev": "concurrently --kill-others-on-fail --names FRONTEND,BACKEND --prefix-colors blue,green \"npm run dev --workspace @pomin360-comercial/frontend\" \"npm run dev --workspace @pomin360-comercial/backend\"",
+    "build": "npm run build --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "check": "npm run typecheck && npm run build",
+    "legacy:dev": "python servir.py"
+  },
+  "devDependencies": { "concurrently": "^9.2.1" }
+}

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pomin360 · Apresentação comercial</title>
+    <meta name="description" content="Um dia comum numa empresa, quem cobra para resolver cada parte dele e o que muda com as 13 aplicações do Pomin360." />
+    <meta name="theme-color" content="#071827" />
+    <link rel="icon" href="/images/icone-p360.webp" type="image/webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400..900;1,400..700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="barra">
+      <a class="marca" href="#capa" data-ir="0" aria-label="Pomin360, voltar à capa"><img src="/images/logo-p360.webp" alt="P360" width="520" height="154" /></a>
+      <nav class="sumario" id="sumario" aria-label="Capítulos"></nav>
+      <div class="barra-acoes">
+        <a class="link-v1" href="/v1/">Versão 1</a>
+        <button type="button" class="botao-contorno" id="tela-cheia">Tela cheia</button>
+      </div>
+    </header>
+
+    <div class="controle" aria-label="Navegação da apresentação">
+      <button type="button" id="ant" aria-label="Capítulo anterior">←</button>
+      <span id="onde"><b>00</b> Capa</span>
+      <button type="button" id="prox" aria-label="Próximo capítulo">→</button>
+    </div>
+
+    <div id="smooth-wrapper"><div id="smooth-content"><main>
+
+      <!-- 00 · Capa -->
+      <section class="capa cap" id="capa" data-nome="Capa" aria-labelledby="capa-t">
+        <img class="capa-foto" src="/images/ap-capa.webp" alt="" width="1600" height="1067" data-speed="0.85" />
+        <div class="capa-texto">
+          <p class="rubrica">Apresentação comercial · Pomin360</p>
+          <h1 id="capa-t" class="linhas">Segunda-feira, 8h40.<br />A primeira pergunta do dia já depende de três planilhas.</h1>
+          <p class="abre">Nesta apresentação, a gente acompanha um dia comum numa empresa média, mostra quem cobra hoje para resolver cada parte dele e o que muda quando as aplicações do Pomin360 entram.</p>
+          <button type="button" class="botao" data-ir="1">Começar pelo dia <span aria-hidden="true">→</span></button>
+        </div>
+        <ul class="capa-rodape"><li>Grupo Pomin</li><li>13 aplicações</li><li>Um login</li><li>Implantação de cerca de uma semana por sistema</li></ul>
+      </section>
+
+      <!-- 01 · Um dia comum -->
+      <section class="dia cap" id="dia" data-nome="Um dia comum" aria-labelledby="dia-t">
+        <div class="dia-cabeca"><p class="rubrica"><span class="num">01</span> Um dia comum</p><h2 id="dia-t" class="linhas">Seis momentos de um dia que você já viveu.</h2></div>
+        <div class="relogio" aria-hidden="true"><span id="relogio">08:12</span></div>
+        <div class="dia-trilho" id="dia-trilho"></div>
+      </section>
+
+      <!-- 02 · A série: Antes × Depois em formato de streaming -->
+      <section class="serie cap" id="serie" data-nome="Antes e depois" aria-label="Antes e depois">
+        <div class="destaque" id="destaque-antes">
+          <img src="/images/ap-billboard-antes.webp" alt="" width="1600" height="1067" data-speed="0.9" />
+          <div class="t3d" data-t3d="ANTES" aria-hidden="true"></div>
+          <div class="destaque-sombra"></div>
+          <div class="destaque-texto">
+            <p class="selo-serie"><b>P360</b> Série original</p>
+            <h2 class="linhas">Cada área com a sua ferramenta.<br /><span class="destaque-sub">E a resposta sempre depois.</span></h2>
+            <p class="ficha-serie"><span>Baseada em fatos reais</span><span>4 temporadas</span><span>13 episódios</span><span class="classif">L</span></p>
+            <p class="sinopse">Diretoria, clientes, tecnologia e marketing. Cada área comprou a melhor ferramenta para o seu problema. Ninguém comprou a conversa entre elas.</p>
+            <div class="destaque-botoes"><button type="button" class="botao" id="assistir">▶ Assistir aos episódios</button><button type="button" class="botao-contorno" data-ir="3">Quanto isso custa</button></div>
+          </div>
+        </div>
+        <div class="trilho-bloco"><h3 class="trilho-nome">As 6 mais vistas na sua empresa hoje</h3><div class="trilho top" id="top"></div></div>
+        <div id="temporadas"></div>
+        <div class="destaque depois" id="destaque-depois">
+          <img src="/images/ap-billboard-depois.webp" alt="" width="1600" height="1067" data-speed="0.9" />
+          <div class="t3d verde" data-t3d="DEPOIS" aria-hidden="true"></div>
+          <div class="destaque-sombra"></div>
+          <div class="destaque-texto">
+            <p class="selo-serie"><b>P360</b> Nova temporada</p>
+            <h2 class="linhas">Um só ecossistema.<br /><span class="destaque-sub">E a resposta no lugar certo.</span></h2>
+            <p class="sinopse">Os mesmos episódios, com o pedido chegando a quem resolve. Cada miniatura abaixo é a demonstração da aplicação: clique para ver o antes e o depois acontecendo.</p>
+          </div>
+        </div>
+        <div class="trilho-bloco"><h3 class="trilho-nome">Agora no Pomin360</h3><div class="trilho largo" id="agora"></div></div>
+      </section>
+
+      <!-- 03 · O mercado -->
+      <section class="papel cap" id="mercado" data-nome="O mercado" aria-labelledby="mercado-t">
+        <div class="mercado-topo">
+          <div><p class="rubrica"><span class="num">03</span> O mercado</p><h2 id="mercado-t" class="linhas">Quem cobra para resolver isso hoje.</h2>
+            <p class="abre">Cada dor do dia tem um fornecedor especialista, e os produtos são bons. O peso está na soma: um contrato, um login, uma fatura em dólar e uma integração para cada um.</p></div>
+          <figure class="mercado-foto"><img src="/images/ap-mercado-faturas.webp" alt="Mesa com faturas de várias assinaturas de software" width="1600" height="1067" loading="lazy" /></figure>
+        </div>
+        <div class="tabela-mercado" id="tabela-mercado"></div>
+        <p class="nota" id="nota-fontes"></p>
+        <div class="conta" id="conta" aria-labelledby="conta-t">
+          <div class="conta-entrada">
+            <h3 id="conta-t">Faça a conta com o cliente</h3>
+            <p>Marque o que a empresa usa hoje e quantas pessoas usam. A conta usa o preço de tabela de cada ferramenta e a mesma fórmula do simulador do Pomin360.</p>
+            <div class="conta-ferramentas" id="conta-ferramentas"></div>
+            <div class="conta-numeros">
+              <label>Pessoas usando <input type="number" id="conta-pessoas" min="1" max="5000" value="50" inputmode="numeric" /></label>
+              <label>Dólar (R$) <input type="number" id="conta-dolar" min="1" step="0.01" inputmode="decimal" /></label>
+            </div>
+          </div>
+          <div class="conta-saida" id="conta-saida" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <!-- 04 · Por que citamos concorrentes -->
+      <section class="papel cap" id="porque" data-nome="Por que citamos nomes" aria-labelledby="porque-t">
+        <p class="rubrica"><span class="num">04</span> Por que citamos nomes</p>
+        <h2 id="porque-t" class="linhas">Falamos dos concorrentes porque a comparação é justa quando a conta inclui tudo.</h2>
+        <ol class="razoes" id="razoes"></ol>
+      </section>
+
+      <!-- 05 · Ecossistema -->
+      <section class="eco cap" id="ecossistema" data-nome="As 13 aplicações" aria-labelledby="eco-t">
+        <div class="eco-texto"><p class="rubrica"><span class="num">05</span> As 13 aplicações</p><h2 id="eco-t" class="linhas">Cada peça resolve um problema. Juntas, dividem o mesmo login.</h2>
+          <p class="abre">Passe o mouse em uma aplicação para ver o que ela faz e o que ela substitui. Clique para abrir a demonstração.</p></div>
+        <canvas class="eco-canvas" id="eco-canvas" aria-label="As 13 aplicações do Pomin360 em volta do anel do logo"></canvas>
+        <div class="eco-dica" id="eco-dica" role="status"></div>
+        <ul class="eco-lista" id="eco-lista" aria-label="Lista das aplicações"></ul>
+      </section>
+
+      <!-- 06 · Por dentro -->
+      <section class="papel cap" id="produtos" data-nome="Por dentro" aria-labelledby="prod-t">
+        <p class="rubrica"><span class="num">06</span> Por dentro de cada aplicação</p>
+        <h2 id="prod-t" class="linhas">Cada aplicação tem a sua demonstração.</h2>
+        <p class="abre">Cada maquete mostra o problema acontecendo e a aplicação corrigindo. Use o botão Antes e Depois, ou arraste para girar.</p>
+        <div class="grade-produtos" id="grade-produtos"></div>
+      </section>
+
+      <!-- 07 · Prova -->
+      <section class="prova cap" id="prova" data-nome="Uso real" aria-labelledby="prova-t">
+        <p class="rubrica"><span class="num">07</span> Uso real</p>
+        <h2 id="prova-t" class="linhas">Já roda todo dia, dentro do Grupo Pomin.</h2>
+        <ul class="numeros" id="numeros"></ul>
+        <p class="nota">Contado direto nos bancos dos sistemas em 29/09/2026.</p>
+        <div class="implantacao"><div><b>~1 semana</b><span>por sistema avulso</span></div><div><b>até 2 meses</b><span>para as 13 aplicações</span></div><div><b>1 login</b><span>para todas elas</span></div></div>
+      </section>
+
+      <!-- 08 · Próximo passo -->
+      <section class="fecha cap" id="fechamento" data-nome="Próximo passo" aria-labelledby="fecha-t">
+        <img src="/images/ap-fechamento.webp" alt="" width="1600" height="1067" loading="lazy" data-speed="0.9" />
+        <div class="fecha-texto">
+          <p class="rubrica"><span class="num">08</span> Próximo passo</p>
+          <h2 id="fecha-t" class="linhas">Comece pela dor que mais custa hoje.</h2>
+          <p class="abre">Escolha uma aplicação, a gente implanta em cerca de uma semana e você mede o resultado antes de decidir pela próxima.</p>
+          <div class="fecha-botoes"><a class="botao" href="/v1/#simulador">Simular o investimento <span aria-hidden="true">→</span></a><a class="botao-contorno claro" href="/v1/#aplicacoes">Ver a experiência completa</a></div>
+        </div>
+      </section>
+    </main>
+    <footer class="rodape"><img src="/images/logo-p360.webp" alt="P360" width="520" height="154" loading="lazy" /><span>Grupo Pomin · Tecnologia que conecta todas as pontas</span><span>Apresentação comercial · v2</span></footer>
+    </div></div>
+
+    <dialog class="demo" id="demo" aria-label="Demonstração da aplicação"></dialog>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>
