@@ -5,7 +5,7 @@ COPY package.json package-lock.json ./
 COPY apps/frontend/package.json apps/frontend/
 COPY apps/backend/package.json apps/backend/
 RUN npm ci --workspace @pomin360-comercial/frontend --include-workspace-root=false
-COPY apps/frontend apps/frontend
+COPY . .
 RUN npm run build --workspace @pomin360-comercial/frontend
 
 # 2) Servidor: login, IA e Mercado Pago (servir.py), servindo o site gerado depois do login
