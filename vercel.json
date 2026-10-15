@@ -16,6 +16,18 @@
   },
   "rewrites": [
     {
+      "source": "/api/perguntar",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
+      "source": "/api/contratar",
+      "destination": {
+        "service": "app"
+      }
+    },
+    {
       "source": "/api/(.*)",
       "destination": {
         "service": "backend"

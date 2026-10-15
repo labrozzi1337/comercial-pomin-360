@@ -5,7 +5,7 @@ Local:  python3 servir.py              -> http://localhost:5360
 Docker: docker compose up -d --build   -> http://localhost:5360
 Produção: todo push na main publica em https://comercial.pomin360.com.br (.github/workflows/deploy.yml).
 Ambiente: APP_USER, APP_PASSWORD, HOST, PORT, SESSION_SECRET, ANTHROPIC_API_KEY (IA da página).
-Sem SESSION_SECRET fixo, reiniciar desloga todo mundo e invalida os links de convite já enviados.
+Em produção, SESSION_SECRET fixo com ao menos 32 caracteres é obrigatório em todas as instâncias.
 
 IA da página: POST /api/perguntar responde dúvidas com o Claude, lendo ia/base.md (catálogo + READMEs limpos,
 gerado por ia/atualizar_base.py). Só para quem tem sessão (comercial ou cliente do convite).
@@ -31,7 +31,10 @@ from urllib.parse import parse_qs, quote, unquote, urlsplit
 USER = os.environ.get('APP_USER', 'comercial')
 PASSWORD = os.environ.get('APP_PASSWORD', 'comercial')
 HOST, PORT = os.environ.get('HOST', '127.0.0.1'), int(os.environ.get('PORT', '5360'))
-SECRET = os.environ.get('SESSION_SECRET', '').encode() or secrets.token_bytes(32)
+SEGREDO_SESSAO = os.environ.get('SESSION_SECRET', '').encode()
+if HOST != '127.0.0.1' and len(SEGREDO_SESSAO) < 32:
+    raise RuntimeError('SESSION_SECRET precisa ter ao menos 32 caracteres em produção.')
+SECRET = SEGREDO_SESSAO or secrets.token_bytes(32)
 ROOT = os.path.dirname(os.path.abspath(__file__))
 PAGE = 'Pomin360 · Universo de soluções.html'
 # Só a página e os arquivos dela são servidos; servir.py, backup/ e o resto da pasta ficam de fora
@@ -288,7 +291,10 @@ class Handler(http.server.SimpleHTTPRequestHandler):
         self.send_response(200)
         self.send_header('Content-Type', mimetypes.guess_type(alvo)[0] or 'application/octet-stream')
         self.send_header('Content-Length', str(len(corpo)))
-        self.send_header('Cache-Control', 'no-store' if alvo.endswith('.html') else 'public, max-age=86400')
+        cache = ('no-store' if alvo.endswith('.html') else
+                 'private, max-age=31536000, immutable' if path.startswith('/assets/') else
+                 'public, max-age=86400')
+        self.send_header('Cache-Control', cache)
         self.end_headers()
         self.wfile.write(corpo)
         return True

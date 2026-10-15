@@ -4,6 +4,8 @@ import http.server
 import json
 import os
 import re
+import subprocess
+import sys
 import threading
 import time
 import unicodedata
@@ -47,7 +49,17 @@ assert 'href="/sair"' in b and '<!--SAIR-->' not in b, 'comercial vê o botão S
 assert re.search(r'style\.css\?v=\d+"', b) and re.search(r'app\.js\?v=\d+"', b), 'CSS/JS com versão do deploy'
 assert req('GET', css + '?v=1', cookie=seller)[0] == 200, 'CSS com ?v= abre'
 assert req('GET', css, cookie=seller)[0] == 200, 'CSS com caminho NFD abre'
-assert req('GET', '/', cookie=seller)[1]['Location'] == page, 'raiz vai para a página'
+if os.path.isdir(servir.DIST):
+    s, h, b = req('GET', '/', cookie=seller)
+    assert s == 200 and 'O molho de chaves</title>' in b, 'raiz abre a apresentação Vite'
+    assert h['Cache-Control'] == 'no-store', 'HTML nunca fica preso no cache'
+    assert req('GET', '/v3/produto/?app=chat', cookie=seller)[0] == 200, 'página de produto preserva a sessão'
+    asset = '/assets/' + next(nome for nome in os.listdir(os.path.join(servir.DIST, 'assets')) if nome.endswith('.js'))
+    s, h, b = req('GET', asset, cookie=seller)
+    assert s == 200 and 'text/html' not in h['Content-Type'], 'bundle autenticado não recebe a tela de login'
+    assert h['Cache-Control'] == 'private, max-age=31536000, immutable', 'bundle fica no cache privado do navegador'
+else:
+    assert req('GET', '/', cookie=seller)[1]['Location'] == page, 'sem build, raiz vai para a página legada'
 for path in ('/servir.py', '/login.html', '/backup/', '/.env'):
     assert req('GET', path, cookie=seller)[0] == 404, f'{path} não é servido'
 
@@ -108,5 +120,13 @@ for evil in ('//evil.com', '///evil.com/x'):
 assert 'Max-Age=0' in req('GET', '/sair', cookie=seller)[1]['Set-Cookie'], 'sair apaga o cookie'
 s, h, b = req('GET', '/favicon.svg')
 assert s == 200 and h['Content-type'] == 'image/svg+xml' and '<svg' in b, 'ícone abre sem login'
-assert 'rel="icon" href="/favicon.svg"' in req('GET', '/')[2], 'tela de login usa o ícone'
+assert 'rel="icon" href="/images/icone-p360.webp"' in req('GET', '/')[2], 'tela de login usa o ícone'
+
+# Produção com segredo ausente ou fraco criaria cookies incompatíveis entre instâncias.
+ambiente = {**os.environ, 'HOST': '0.0.0.0'}
+ambiente.pop('SESSION_SECRET', None)
+resultado = subprocess.run([sys.executable, '-c', 'import servir'], env=ambiente, capture_output=True, text=True)
+assert resultado.returncode != 0 and 'SESSION_SECRET' in resultado.stderr, 'produção exige segredo de sessão fixo'
+ambiente['SESSION_SECRET'] = 'x' * 32
+assert subprocess.run([sys.executable, '-c', 'import servir'], env=ambiente, capture_output=True).returncode == 0, 'segredo forte inicia em produção'
 print('ok: login e convite do servir.py')

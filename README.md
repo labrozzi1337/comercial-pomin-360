@@ -8,6 +8,8 @@ Base monorepo para a evolução da experiência comercial: Vite no frontend, API
 2. Execute `npm install`.
 3. Execute `npm run dev` e abra `http://localhost:8081`.
 
+Em produção, configure `APP_USER`, `APP_PASSWORD` e um `SESSION_SECRET` aleatório com ao menos 32 caracteres. O segredo precisa ser idêntico em todas as instâncias; sem isso, navegações e carregamentos de CSS/JS perdem a sessão.
+
 O frontend atual entrega a página comercial legada sem alterar seu HTML-fonte. Os endpoints novos começam no Next em `http://localhost:3000/api`; o health check é `GET /api/v1/health`.
 
 ## Experiência comercial v1 (apps/frontend/v1)
